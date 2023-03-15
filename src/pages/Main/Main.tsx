@@ -1,11 +1,8 @@
 import { Component } from 'react';
+import { SearchBar } from '../../components/SearchBar/SearchBar';
 
 export class Main extends Component {
   render() {
-    return (
-      <div>
-        <h1>Hello World</h1>
-      </div>
-    );
+    return <SearchBar />;
   }
 }
