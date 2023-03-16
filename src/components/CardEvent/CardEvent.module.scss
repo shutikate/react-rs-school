@@ -1,0 +1,62 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  cursor: pointer;
+  transition: box-shadow 0.4s ease;
+
+  &:hover {
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+  }
+}
+
+.image {
+  width: 100%;
+}
+
+.infoBlock {
+  border-bottom: 1px solid rgb(33, 53, 71, 0.2);
+  margin-bottom: 10px;
+}
+
+.infoLine {
+  display: flex;
+  justify-content: space-between;
+}
+
+.date,
+.place,
+.phone,
+.time {
+  position: relative;
+  margin: 0 0 10px 25px;
+}
+
+.date::before {
+  background: url('../../assets/icons/calendar.svg') no-repeat;
+}
+
+.time::before {
+  background: url('../../assets/icons/clock.svg') no-repeat;
+}
+
+.place::before {
+  background: url('../../assets/icons/marker.svg') no-repeat;
+}
+
+.phone::before {
+  background: url('../../assets/icons/phone.svg') no-repeat;
+}
+
+.date::before,
+.time::before,
+.place::before,
+.phone::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: -25px;
+  background-size: 20px 20px;
+  width: 20px;
+  height: 20px;
+}
