@@ -4,7 +4,7 @@ import { CardEvent } from '../../components/CardEvent/CardEvent';
 import cardData from '../../json/data';
 import style from './Main.module.scss';
 
-export class Main extends Component {
+export class Home extends Component {
   render() {
     return (
       <>

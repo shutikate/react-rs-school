@@ -4,8 +4,8 @@ import {
   RouterProvider,
   Route,
 } from 'react-router-dom';
-import { Main } from './pages/Main/Main';
-import { Layout } from './components/Layout/Layout';
+import { Home } from './pages/Home/Home';
+import Layout from './components/Layout/Layout';
 import { AboutUs } from './pages/AboutUs/AboutUs';
 import { NotFound } from './pages/NotFound/NotFound';
 
@@ -13,8 +13,8 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route path="/" element={<Layout />}>
-        <Route index element={<Main />} />
-        <Route path="about" element={<AboutUs />} />
+        <Route path="home" element={<Home />} />
+        <Route path="about-us" element={<AboutUs />} />
       </Route>
       <Route path="*" element={<NotFound />} />
     </>

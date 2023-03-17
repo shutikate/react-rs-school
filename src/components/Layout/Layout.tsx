@@ -1,12 +1,13 @@
 import { Component } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Header } from '../Header/Header';
+import withRouter from '../../hoc/withRouter';
 
-export class Layout extends Component {
+class Layout extends Component {
   render() {
     return (
       <div>
-        <Header />
+        <Header {...this.props} />
         <div>
           <Outlet />
         </div>
@@ -14,3 +15,5 @@ export class Layout extends Component {
     );
   }
 }
+
+export default withRouter(Layout);
