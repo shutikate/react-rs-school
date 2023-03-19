@@ -1,0 +1,27 @@
+.wrapper {
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.image {
+  width: auto;
+  max-height: 600px;
+}
+
+.errorText {
+  margin-bottom: 20px;
+  font-size: 18px;
+}
+
+.link {
+  font-size: 24px;
+  color: #36ad36;
+  text-decoration: underline;
+
+  &:hover {
+    color: #213547;
+  }
+}
