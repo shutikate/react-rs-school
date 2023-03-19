@@ -1,5 +1,5 @@
 .wrapper {
-  padding: 20px;
+  padding: 50px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -7,9 +7,13 @@
 }
 
 .image {
-  margin-bottom: 30px;
   width: auto;
   max-height: 600px;
+}
+
+.errorText {
+  margin-bottom: 20px;
+  font-size: 18px;
 }
 
 .link {

@@ -11,13 +11,21 @@ export class SearchBar extends Component<Props, State> {
     this.state = { searchValue: localStorage.getItem('sk-search-value') || '' };
   }
 
-  changeInputValue = (event: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ searchValue: event.target.value });
-  };
+  componentDidMount() {
+    window.addEventListener('beforeunload', this.handleBeforeUnload);
+  }
 
   componentWillUnmount(): void {
     localStorage.setItem('sk-search-value', this.state.searchValue);
   }
+
+  changeInputValue = (event: React.ChangeEvent<HTMLInputElement>) => {
+    this.setState({ searchValue: event.target.value });
+  };
+
+  handleBeforeUnload = () => {
+    localStorage.setItem('sk-search-value', this.state.searchValue);
+  };
 
   render() {
     return (

@@ -5,7 +5,7 @@ import style from './CardEvent.module.scss';
 export class CardEvent extends Component<Event> {
   render() {
     return (
-      <div className={style.wrapper}>
+      <div data-testid={this.props.id} className={style.wrapper}>
         <div>
           <img src={this.props.photo} alt={'Photo of the event'} className={style.image}></img>
           <h5>{this.props.category}</h5>

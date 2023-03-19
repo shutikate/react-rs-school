@@ -46,7 +46,7 @@ const cardData: CardData = {
       date: '25.03.2023',
       timeStart: '10:00',
       address: 'Krakow, al.Pokoju 6B',
-      contact: 'f.monte@poczta.com',
+      contact: '+48 675980786',
       payment: 'Pay online',
       minPrice: '7',
       maxPrice: '12',
@@ -59,7 +59,7 @@ const cardData: CardData = {
       date: '30.03.2023',
       timeStart: '12:00',
       address: 'Krakow, Rynek Glowny',
-      contact: 'j.home@poczta.com',
+      contact: '+48 673425416',
       payment: 'Free',
     },
     {
