@@ -23,6 +23,7 @@ export class SearchBar extends Component<Props, State> {
     return (
       <div className={style.container}>
         <input
+          aria-label="search"
           type="text"
           placeholder="Search"
           className={style.input}

@@ -2,7 +2,7 @@ import { Component } from 'react';
 import { SearchBar } from '../../components/SearchBar/SearchBar';
 import { CardEvent } from '../../components/CardEvent/CardEvent';
 import cardData from '../../json/data';
-import style from './Main.module.scss';
+import style from './Home.module.scss';
 
 export class Home extends Component {
   render() {
