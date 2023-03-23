@@ -1,7 +1,15 @@
 import { Component } from 'react';
 import { Form } from '../../components/Form/Form';
 
-export class FormPage extends Component {
+type Props = Record<string, never>;
+type State = { cards: [] };
+
+export class FormPage extends Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = { cards: [] };
+  }
+
   render() {
     return (
       <div>
