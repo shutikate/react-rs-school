@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import style from './Select.module.scss';
 
 interface Option {
   label: string;
@@ -16,7 +17,7 @@ export class Select extends Component<SelectProps> {
     return (
       <label>
         {this.props.label}
-        <select ref={this.props.selectRef}>
+        <select ref={this.props.selectRef} className={style.select}>
           {this.props.options.map((option) => (
             <option key={option.value} value={option.value}>
               {option.label}

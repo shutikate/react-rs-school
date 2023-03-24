@@ -1,0 +1,16 @@
+.input {
+  margin: 0 10px 5px 10px;
+  height: 20px;
+  padding: 5px;
+  border: 1px solid #bdbdbd;
+  border-radius: 8px;
+  transition: border-color 0.25s ease-in-out, box-shadow 0.25s ease-in-out;
+
+  &:focus {
+    color: #212529;
+    background-color: #ffffff;
+    border-color: #bdbdbd;
+    outline: 0;
+    box-shadow: 0 0 0 0.2em rgba(158, 158, 158, 0.25);
+  }
+}

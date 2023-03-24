@@ -1,4 +1,5 @@
 import { forwardRef } from 'react';
+import style from './Input.module.scss';
 
 interface Props {
   label: string;
@@ -11,9 +12,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((InputProps, ref) 
   const { label, type, ...props } = InputProps;
   return (
     <>
-      <label>
+      <label className={style.label}>
         {label}
-        <input {...props} type={type} ref={ref} />
+        <input {...props} type={type} ref={ref} className={style.input} />
       </label>
     </>
   );

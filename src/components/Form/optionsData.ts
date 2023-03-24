@@ -1,19 +1,23 @@
 export const optionsForSelect = [
   {
+    label: 'Check category',
+    value: 'Check category',
+  },
+  {
     label: 'Concerts',
-    value: 'concerts',
+    value: 'Concerts',
   },
   {
     label: 'For Children',
-    value: 'for-children',
+    value: 'For children',
   },
   {
     label: 'Festivals',
-    value: 'festivals',
+    value: 'Festivals',
   },
   {
     label: 'Sport',
-    value: 'sport',
+    value: 'Sport',
   },
 ];
 

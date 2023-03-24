@@ -1,46 +1,51 @@
-import { Errors } from './Form';
+import { Event, Errors } from '../../types';
 
-interface Values {
-  select: string | undefined;
-  name: string | undefined;
-  date: string | undefined;
-  time: string | undefined;
-  address: string | undefined;
-  minimumPrice: string | undefined;
-  maximumPrice: string | undefined;
-  photo: string;
-  checkBox: boolean | undefined;
-  payMethod: string | null | undefined;
-}
-
-export const checkValidation = (values: Values, errors: Errors) => {
-  // const { values, errors } = { ...props };
+export const checkValidation = (values: Event, errors: Errors) => {
   errors.nameEvent = !values.name
     ? 'Name of event is required'
     : values.name && !/^[А-ЯЁA-Z]+$/.test(values.name[0])
     ? 'Name of event must start with a capital letter'
     : '';
+
   errors.date = !values.date
     ? 'Date of event is required'
     : values.date && Date.parse(values.date) < Date.now()
     ? 'Enter a date no older than today'
     : '';
+
   errors.time = !values.time ? 'Time of event is required' : '';
+
   errors.address = !values.address ? 'Address of event is required' : '';
+
+  errors.contact = !values.contact
+    ? 'Contact phone is required'
+    : values.contact && !/^[0-9+]+$/.test(values.contact)
+    ? ' Only numbers allowed'
+    : values.contact && values.contact.length < 9
+    ? 'Phone number must contain at least 9 digits'
+    : values.contact && values.contact[0] !== '+'
+    ? 'Phone number must start with +'
+    : '';
+
   errors.agree = !values.checkBox ? 'Please, check this' : '';
-  errors.payMethod = !values.payMethod ? 'Please, check one of this' : '';
+
+  errors.payment = !values.payment ? 'Please, check one of this' : '';
+
   errors.photo = values.photo.length === 0 ? 'Select file to upload' : '';
+
   errors.price =
-    values.payMethod === 'Free' &&
-    (Number(values.minimumPrice) !== 0 || Number(values.maximumPrice) !== 0)
+    values.payment === 'Free' && (Number(values.minPrice) !== 0 || Number(values.maxPrice) !== 0)
       ? 'Your event is free, please leave these fields blank'
-      : (values.minimumPrice && Number(values.minimumPrice) <= 0) ||
-        (values.minimumPrice && Number(values.maximumPrice) <= 0)
+      : (values.minPrice && Number(values.minPrice) <= 0) ||
+        (values.minPrice && Number(values.maxPrice) <= 0)
       ? 'Please enter an amount greater than zero'
-      : values.payMethod === 'Pay online' && (!values.minimumPrice || !values.maximumPrice)
+      : values.payment === 'Pay online' && (!values.minPrice || !values.maxPrice)
       ? 'Please enter the min and max amount'
-      : Number(values.minimumPrice) > Number(values.maximumPrice)
+      : Number(values.minPrice) > Number(values.maxPrice)
       ? 'The minimum amount is greater than the maximum'
       : '';
+
+  errors.category = values.category === 'Check category' ? 'Please, check category' : '';
+
   return errors;
 };
