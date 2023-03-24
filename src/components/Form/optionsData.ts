@@ -16,3 +16,16 @@ export const optionsForSelect = [
     value: 'sport',
   },
 ];
+
+export const radioData = [
+  {
+    label: 'Pay Online',
+    name: 'pay-method',
+    value: 'Pay online',
+  },
+  {
+    label: 'Free',
+    name: 'pay-method',
+    value: 'Free',
+  },
+];
