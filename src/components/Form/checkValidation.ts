@@ -43,6 +43,8 @@ export const checkValidation = (values: Event, errors: Errors) => {
       ? 'Please enter the min and max amount'
       : Number(values.minPrice) > Number(values.maxPrice)
       ? 'The minimum amount is greater than the maximum'
+      : values.payment !== 'Free' && (!values.minPrice || !values.maxPrice)
+      ? 'Please enter the min and max amount'
       : '';
 
   errors.category = values.category === 'Check category' ? 'Please, check category' : '';

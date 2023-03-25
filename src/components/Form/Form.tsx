@@ -132,7 +132,7 @@ export class Form extends Component<Props, State> {
         {!this.state.validation ? (
           <Button type={'submit'} text={'Create card'} />
         ) : (
-          <span>{'Card created successfully'}</span>
+          <div className={style.message}>Card created successfully</div>
         )}
       </form>
     );
