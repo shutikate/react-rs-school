@@ -48,9 +48,7 @@ export class Form extends Component<Props, State> {
 
   handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
     const values = {
-      id: crypto.randomUUID(),
       category: this.selectRef.current?.value,
       name: this.nameRef.current?.value,
       date: this.dateRef.current?.value,
@@ -130,7 +128,7 @@ export class Form extends Component<Props, State> {
           </div>
         </div>
         {!this.state.validation ? (
-          <Button type={'submit'} text={'Create card'} />
+          <Button type={'submit'} text="Create card" />
         ) : (
           <div className={style.message}>Card created successfully</div>
         )}

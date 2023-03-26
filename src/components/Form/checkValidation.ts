@@ -31,7 +31,7 @@ export const checkValidation = (values: Event, errors: Errors) => {
 
   errors.payment = !values.payment ? 'Please, check one of this' : '';
 
-  errors.photo = values.photo.length === 0 ? 'Select file to upload' : '';
+  errors.photo = !values.photo ? 'Select file to upload' : '';
 
   errors.price =
     values.payment === 'Free' && (Number(values.minPrice) !== 0 || Number(values.maxPrice) !== 0)

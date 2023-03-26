@@ -1,5 +1,5 @@
 export interface Event {
-  id: string;
+  id?: string;
   category: string | undefined;
   photo: string;
   name: string | undefined;
