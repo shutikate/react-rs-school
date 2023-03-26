@@ -1,4 +1,5 @@
 import { Component, createRef, MutableRefObject } from 'react';
+import { v4 as uuid } from 'uuid';
 import { Button } from '../Button/Button';
 import { Select } from '../Select/Select';
 import { Input } from '../Input/Input';
@@ -73,7 +74,7 @@ export class Form extends Component<Props, State> {
     } else {
       this.setState({ validation: true });
       setTimeout(() => this.setState({ validation: false }), 2000);
-      this.props.addCard(values);
+      this.props.addCard({ ...values, id: uuid() });
       this.formRef.current?.reset();
     }
   };
@@ -114,8 +115,8 @@ export class Form extends Component<Props, State> {
               ))}
               <ErrorField error={this.state.errors.payment} />
             </div>
-            <Input label={'Minimum price:'} type={'number'} ref={this.minimumPriceRef} />
-            <Input label={'Maximum price:'} type={'number'} ref={this.maximumPriceRef} />
+            <Input label={'Minimum price:'} type={'number'} min={'1'} ref={this.minimumPriceRef} />
+            <Input label={'Maximum price:'} type={'number'} min={'1'} ref={this.maximumPriceRef} />
             <ErrorField error={this.state.errors.price} />
             <Input label={'Photo:'} type={'file'} ref={this.photoRef} />
             <ErrorField error={this.state.errors.photo} />

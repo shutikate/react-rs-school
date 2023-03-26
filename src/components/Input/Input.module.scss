@@ -1,5 +1,9 @@
+.wrapper {
+  display: inline-flex;
+}
+
 .input {
-  margin: 0 10px 5px 10px;
+  margin-left: 10px;
   height: 20px;
   padding: 5px;
   border: 1px solid #bdbdbd;
@@ -16,5 +20,16 @@
 }
 
 .label {
+  margin-bottom: 5px;
   width: 100%;
+  display: inline-flex;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+  margin: auto 10px;
+
+  &:focus {
+    box-shadow: none;
+  }
 }

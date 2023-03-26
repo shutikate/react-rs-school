@@ -22,8 +22,8 @@ export class FormPage extends Component<Props, State> {
       <div>
         <Form addCard={this.addCard} />
         <div className={style.cardWrapper}>
-          {this.state.cards.map((card, index) => (
-            <CardEvent key={`${card.name}-${index}`} {...card} />
+          {this.state.cards.map((card) => (
+            <CardEvent key={card.id} {...card} />
           ))}
         </div>
       </div>
