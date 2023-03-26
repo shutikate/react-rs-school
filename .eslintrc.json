@@ -21,7 +21,13 @@
     "ecmaVersion": "latest",
 		"sourceType": "module"
   },
-  "plugins": ["@typescript-eslint", "react", "prettier", "react-hooks"],
+  "plugins": ["testing-library", "@typescript-eslint", "react", "prettier", "react-hooks"],
+  "overrides": [
+    {
+      "files": ["**/__tests__/**/*.[jt]s?(x)', '**/?(*.)+(spec|test).[jt]s?(x)"],
+      "extends": ["plugin:testing-library/react"]
+    }
+	],
   "rules": {
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
@@ -38,7 +44,14 @@
     "@typescript-eslint/no-explicit-any": "error",
     "@typescript-eslint/no-var-reqiures": "off",
     "react/jsx-uses-react": "off",
-    "react/react-in-jsx-scope": "off"
+    "react/react-in-jsx-scope": "off",
+    "testing-library/no-await-sync-query": "error",
+    "testing-library/no-render-in-setup": "error",
+    "testing-library/prefer-user-event": "error",
+    "testing-library/prefer-explicit-assert": "error",
+    "testing-library/prefer-presence-queries": "error",
+		"testing-library/prefer-screen-queries": "error",
+    "testing-library/prefer-wait-for": "error"
   },
   "settings": {
     "react": {

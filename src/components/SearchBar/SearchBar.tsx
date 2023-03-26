@@ -38,7 +38,7 @@ export class SearchBar extends Component<Props, State> {
           value={this.state.searchValue}
           onChange={this.changeInputValue}
         ></input>
-        <Button text={'Search'} />
+        <Button type={'button'} text={'Search'} />
       </div>
     );
   }

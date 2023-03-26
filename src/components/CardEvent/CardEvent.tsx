@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { Event } from '../../json/data';
+import { Event } from '../../types';
 import style from './CardEvent.module.scss';
 
 export class CardEvent extends Component<Event> {
@@ -13,7 +13,7 @@ export class CardEvent extends Component<Event> {
           <div className={style.infoBlock}>
             <div className={style.infoLine}>
               <p className={style.date}>{this.props.date}</p>
-              <p className={style.time}>{this.props.timeStart}</p>
+              <p className={style.time}>{this.props.time}</p>
             </div>
             <p className={style.place}>{this.props.address}</p>
             <p className={style.phone}>{this.props.contact}</p>

@@ -11,7 +11,7 @@ describe('Testing Home', () => {
   it('All cards has to be rendered', async () => {
     render(<Home />);
     cardData.events.map((event) => {
-      const cardElement = screen.getByTestId(event.id);
+      const cardElement = screen.getByTestId(event.id!);
       expect(cardElement).toBeInTheDocument();
     });
   });

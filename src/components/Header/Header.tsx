@@ -21,6 +21,9 @@ export class Header extends Component<Props> {
           <NavLink to="/about-us" className={isActive}>
             About Us
           </NavLink>
+          <NavLink to="/form" className={isActive}>
+            Form
+          </NavLink>
         </div>
         <p className={style.namePage}>
           {this.props.location.pathname === '/'

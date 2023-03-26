@@ -1,0 +1,32 @@
+.form {
+  margin: 0 auto 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 700px;
+  font-weight: bolder;
+}
+
+.wrapper {
+  display: flex;
+  gap: 30px;
+  padding: 10px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.2);
+
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.wrapperColumn {
+  display: flex;
+  flex-direction: column;
+}
+
+.message {
+  margin: 0 auto;
+  text-transform: uppercase;
+  font-weight: bolder;
+  font-size: 20px;
+}
