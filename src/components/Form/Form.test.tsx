@@ -3,10 +3,6 @@ import { vi } from 'vitest';
 import userEvent from '@testing-library/user-event';
 import { Form } from './Form';
 
-interface Url {
-  createObjectURL: (obj: Blob | MediaSource) => string;
-}
-
 describe('Testing Form', () => {
   it('submit form', async () => {
     const addCard = vi.fn();
@@ -33,10 +29,7 @@ describe('Testing Form', () => {
     await userEvent.click(payment);
     await userEvent.type(minPrice, '10');
     await userEvent.type(maxPrice, '20');
-    const url: Url = {
-      createObjectURL: vi.fn().mockImplementationOnce((x) => x),
-    };
-    (global.URL as Url) = url;
+    global.URL.createObjectURL = vi.fn().mockImplementation((x) => x);
     const file = new File(['hello'], 'hello.png');
     await userEvent.upload(photo, file);
     await userEvent.click(agreement);
@@ -46,5 +39,38 @@ describe('Testing Form', () => {
     await user.click(button);
 
     expect(addCard).toHaveBeenCalled();
+  });
+
+  it('show errors', async () => {
+    const addCard = vi.fn();
+    render(<Form addCard={addCard} />);
+
+    const category = screen.getByLabelText('Event category');
+    const phone = screen.getByLabelText('Phone:');
+    const payment = screen.getByLabelText('Free');
+    const minPrice = screen.getByLabelText('Minimum price:');
+    const maxPrice = screen.getByLabelText('Maximum price:');
+
+    await userEvent.selectOptions(category, 'Check category');
+    await userEvent.type(phone, 'hello');
+    await userEvent.click(payment);
+    await userEvent.type(minPrice, '10');
+    await userEvent.type(maxPrice, '20');
+
+    const user = userEvent.setup();
+    const button = screen.getByText('Create card');
+    await user.click(button);
+
+    expect(screen.getByText('Please, check category')).toBeInTheDocument();
+    expect(screen.getByText('Name of event is required')).toBeInTheDocument();
+    expect(screen.getByText('Date of event is required')).toBeInTheDocument();
+    expect(screen.getByText('Time of event is required')).toBeInTheDocument();
+    expect(screen.getByText('Address of event is required')).toBeInTheDocument();
+    expect(screen.getByText('Only numbers allowed')).toBeInTheDocument();
+    expect(
+      screen.getByText('Your event is free, please leave these fields blank')
+    ).toBeInTheDocument();
+    expect(screen.getByText('Select file to upload')).toBeInTheDocument();
+    expect(screen.getByText('Please, check this')).toBeInTheDocument();
   });
 });

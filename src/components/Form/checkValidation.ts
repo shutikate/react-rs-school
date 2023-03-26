@@ -20,7 +20,7 @@ export const checkValidation = (values: Event, errors: Errors) => {
   errors.contact = !values.contact
     ? 'Contact phone is required'
     : values.contact && !/^[0-9+]+$/.test(values.contact)
-    ? ' Only numbers allowed'
+    ? 'Only numbers allowed'
     : values.contact && values.contact.length < 9
     ? 'Phone number must contain at least 9 digits'
     : values.contact && values.contact[0] !== '+'
