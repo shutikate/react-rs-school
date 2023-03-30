@@ -1,139 +1,177 @@
-import { Component, createRef, MutableRefObject } from 'react';
 import { v4 as uuid } from 'uuid';
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { ErrorMessage } from '@hookform/error-message';
 import { Button } from '../Button/Button';
 import { Select } from '../Select/Select';
 import { Input } from '../Input/Input';
-import { ErrorField } from '../ErrorField/ErrorField';
-import { checkValidation } from './checkValidation';
 import { optionsForSelect, radioData } from './optionsData';
-import { Event, Errors } from '../../types';
+import { Event } from '../../types';
+import {
+  categoryRules,
+  eventRules,
+  dateRules,
+  timeRules,
+  addressRules,
+  phoneRules,
+  paymentRules,
+  priceRules,
+  photoRules,
+  agreementRules,
+} from './validationRules';
 import style from './Form.module.scss';
 
-type Props = { addCard: (card: Event) => void };
-type State = { errors: Errors; validation: boolean };
+type Props = {
+  addCard: (card: Event) => void;
+};
 
-export class Form extends Component<Props, State> {
-  formRef = createRef<HTMLFormElement>();
-  selectRef = createRef<HTMLSelectElement>();
-  nameRef = createRef<HTMLInputElement>();
-  dateRef = createRef<HTMLInputElement>();
-  timeRef = createRef<HTMLInputElement>();
-  addressRef = createRef<HTMLInputElement>();
-  contactRef = createRef<HTMLInputElement>();
-  minimumPriceRef = createRef<HTMLInputElement>();
-  maximumPriceRef = createRef<HTMLInputElement>();
-  photoRef = createRef<HTMLInputElement>();
-  checkBoxRef = createRef<HTMLInputElement>();
-  payMethodRef: MutableRefObject<(HTMLInputElement | null)[] | null>;
+export const Form = (props: Props) => {
+  const [successMessage, setSuccessMessage] = useState(false);
+  const [disabledPrice, setDisabledPrice] = useState(false);
 
-  constructor(props: Props) {
-    super(props);
-    this.payMethodRef = createRef();
-    this.payMethodRef.current = [];
-    this.state = {
-      errors: {
-        nameEvent: '',
-        date: '',
-        time: '',
-        address: '',
-        photo: '',
-        agree: '',
-        payment: '',
-        price: '',
-        contact: '',
-        category: '',
-      },
-      validation: false,
-    };
-  }
+  //     photo:
+  //       this.photoRef.current?.files && this.photoRef.current?.files.length !== 0
+  //         ? URL.createObjectURL(this.photoRef.current.files[0])
+  //         : '',
+  const {
+    register,
+    handleSubmit,
+    reset,
+    resetField,
+    formState: { errors },
+    watch,
+  } = useForm<Event>({ defaultValues: { photo: '' } });
 
-  handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const values = {
-      category: this.selectRef.current?.value,
-      name: this.nameRef.current?.value,
-      date: this.dateRef.current?.value,
-      time: this.timeRef.current?.value,
-      address: this.addressRef.current?.value,
-      contact: this.contactRef.current?.value,
-      minPrice: this.minimumPriceRef.current?.value,
-      maxPrice: this.maximumPriceRef.current?.value,
-      photo:
-        this.photoRef.current?.files && this.photoRef.current?.files.length !== 0
-          ? URL.createObjectURL(this.photoRef.current.files[0])
-          : '',
-      checkBox: this.checkBoxRef.current?.checked,
-      payment:
-        this.payMethodRef.current && this.payMethodRef.current.find((el) => el?.checked)?.value,
-    };
+  const paymentValue = watch('payment');
 
-    const errors = checkValidation(values, this.state.errors);
-
-    if (Object.values(errors).filter((error) => error).length > 0) {
-      this.setState({ errors });
+  useEffect(() => {
+    if (paymentValue === 'Free') {
+      setDisabledPrice(true);
+      resetField('minPrice');
+      resetField('maxPrice');
     } else {
-      this.setState({ validation: true });
-      setTimeout(() => this.setState({ validation: false }), 2000);
-      this.props.addCard({ ...values, id: uuid() });
-      this.formRef.current?.reset();
+      setDisabledPrice(false);
     }
+  }, [paymentValue, resetField]);
+
+  const onSubmit = (data: Event) => {
+    setSuccessMessage(true);
+    setTimeout(() => setSuccessMessage(false), 2000);
+    props.addCard({ ...data, id: uuid() });
+    reset();
   };
 
-  render() {
-    return (
-      <form onSubmit={this.handleSubmit} ref={this.formRef} noValidate className={style.form}>
-        <div className={style.wrapper}>
-          <div className={style.wrapperColumn}>
-            <Select
-              label={'Event category'}
-              options={optionsForSelect}
-              selectRef={this.selectRef}
-            />
-            <ErrorField error={this.state.errors.category} />
-            <Input label={'Event name:'} type={'text'} ref={this.nameRef} />
-            <ErrorField error={this.state.errors?.nameEvent} />
-            <Input label={'Date:'} type={'date'} ref={this.dateRef} />
-            <ErrorField error={this.state.errors.date} />
-            <Input label={'Time:'} type={'time'} ref={this.timeRef} />
-            <ErrorField error={this.state.errors.time} />
-            <Input label={'Address:'} type={'text'} ref={this.addressRef} />
-            <ErrorField error={this.state.errors.address} />
-            <Input label={'Phone:'} type={'text'} ref={this.contactRef} />
-            <ErrorField error={this.state.errors.contact} />
-          </div>
-          <div className={style.wrapperColumn}>
-            <div>
-              {radioData.map((radio, index) => (
-                <Input
-                  key={radio.value}
-                  type={'radio'}
-                  label={radio.label}
-                  name={radio.name}
-                  value={radio.value}
-                  ref={(el) => this.payMethodRef.current && (this.payMethodRef.current[index] = el)}
-                />
-              ))}
-              <ErrorField error={this.state.errors.payment} />
-            </div>
-            <Input label={'Minimum price:'} type={'number'} min={'1'} ref={this.minimumPriceRef} />
-            <Input label={'Maximum price:'} type={'number'} min={'1'} ref={this.maximumPriceRef} />
-            <ErrorField error={this.state.errors.price} />
-            <Input label={'Photo:'} type={'file'} ref={this.photoRef} />
-            <ErrorField error={this.state.errors.photo} />
-            <Input
-              label={'I agree with the rules of the site'}
-              type={'checkbox'}
-              ref={this.checkBoxRef}
-            />
-            <ErrorField error={this.state.errors.agree} />
-          </div>
+  return (
+    <form onSubmit={handleSubmit(onSubmit)} className={style.form}>
+      <div className={style.wrapper}>
+        <div className={style.wrapperColumn}>
+          <Select
+            label={'Event category'}
+            options={optionsForSelect}
+            {...register('category', {
+              validate: categoryRules,
+            })}
+          />
+          <ErrorMessage errors={errors} name="category" />
+          <Input
+            label={'Event name:'}
+            type={'text'}
+            {...register('name', {
+              validate: eventRules,
+            })}
+          />
+          <ErrorMessage errors={errors} name="name" />
+          <Input
+            label={'Date:'}
+            type={'date'}
+            {...register('date', {
+              validate: dateRules,
+            })}
+          />
+          <ErrorMessage errors={errors} name="date" />
+          <Input
+            label={'Time:'}
+            type={'time'}
+            {...register('time', {
+              validate: timeRules,
+            })}
+          />
+          <ErrorMessage errors={errors} name="time" />
+          <Input
+            label={'Address:'}
+            type={'text'}
+            {...register('address', {
+              validate: addressRules,
+            })}
+          />
+          <ErrorMessage errors={errors} name="address" />
+          <Input
+            label={'Phone:'}
+            type={'text'}
+            {...register('contact', {
+              validate: phoneRules,
+            })}
+          />
+          <ErrorMessage errors={errors} name="contact" />
         </div>
-        {!this.state.validation ? (
-          <Button type={'submit'} text="Create card" />
-        ) : (
-          <div className={style.message}>Card created successfully</div>
-        )}
-      </form>
-    );
-  }
-}
+        <div className={style.wrapperColumn}>
+          <div>
+            {radioData.map((radio) => (
+              <Input
+                key={radio.value}
+                type={'radio'}
+                label={radio.label}
+                value={radio.value}
+                {...register('payment', {
+                  validate: paymentRules,
+                })}
+              />
+            ))}
+            <ErrorMessage errors={errors} name="payment" />
+          </div>
+          <Input
+            label={'Minimum price:'}
+            type={'number'}
+            min={'1'}
+            disabled={disabledPrice}
+            {...register('minPrice', {
+              validate: paymentValue !== 'Free' ? priceRules : {},
+            })}
+          />
+          <ErrorMessage errors={errors} name="minPrice" />
+          <Input
+            label={'Maximum price:'}
+            type={'number'}
+            min={'1'}
+            disabled={disabledPrice}
+            {...register('maxPrice', {
+              validate: paymentValue !== 'Free' ? priceRules : {},
+            })}
+          />
+          <ErrorMessage errors={errors} name="maxPrice" />
+          <Input
+            label={'Photo:'}
+            type={'file'}
+            {...register('photo', {
+              validate: photoRules,
+            })}
+          />
+          <ErrorMessage errors={errors} name="photo" />
+          <Input
+            label={'I agree with the rules of the site'}
+            type={'checkbox'}
+            {...register('checkBox', {
+              validate: agreementRules,
+            })}
+          />
+          <ErrorMessage errors={errors} name="checkBox" />
+        </div>
+      </div>
+      {successMessage ? (
+        <div className={style.message}>Card created successfully</div>
+      ) : (
+        <Button type={'submit'} text="Create card" />
+      )}
+    </form>
+  );
+};

@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { forwardRef } from 'react';
 import style from './Select.module.scss';
 
 interface Option {
@@ -9,22 +9,20 @@ interface Option {
 interface SelectProps {
   label: string;
   options: Array<Option>;
-  selectRef: React.RefObject<HTMLSelectElement>;
 }
 
-export class Select extends Component<SelectProps> {
-  render() {
-    return (
-      <label>
-        {this.props.label}
-        <select ref={this.props.selectRef} className={style.select}>
-          {this.props.options.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </select>
-      </label>
-    );
-  }
-}
+export const Select = forwardRef<HTMLSelectElement, SelectProps>((SelectProps, ref) => {
+  const { label, options, ...rest } = SelectProps;
+  return (
+    <label>
+      {label}
+      <select ref={ref} className={style.select} {...rest}>
+        {options.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
+    </label>
+  );
+});
