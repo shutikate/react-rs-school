@@ -6,7 +6,7 @@ export const CardEvent: FC<Event> = ({ ...props }) => {
   return (
     <div data-testid={props.id} className={style.wrapper}>
       <div>
-        <img src={props.photo} alt={'Photo of the event'} className={style.image}></img>
+        <img src={props.photoURL} alt={'Photo of the event'} className={style.image}></img>
         <h5>{props.category}</h5>
         <h4>{props.name}</h4>
         <div className={style.infoBlock}>

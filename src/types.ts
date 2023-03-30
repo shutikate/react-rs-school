@@ -1,7 +1,8 @@
 export interface Event {
   id?: string;
   category: string;
-  photo: string;
+  photo?: FileList;
+  photoURL: string;
   name: string;
   date: string;
   time: string;

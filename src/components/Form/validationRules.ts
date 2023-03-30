@@ -49,7 +49,7 @@ export const priceRules = {
 };
 
 export const photoRules = {
-  required: (value: string) => !!value || 'Select file to upload',
+  required: (value: FileList | undefined) => value?.length !== 0 || 'Select file to upload',
 };
 
 export const agreementRules = {

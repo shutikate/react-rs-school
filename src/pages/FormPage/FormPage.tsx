@@ -8,6 +8,7 @@ type Cards = Array<Event>;
 
 export const FormPage = () => {
   const [cards, setCards] = useState<Cards>([]);
+  console.log(cards);
 
   const addCard = (card: Event) => {
     setCards([...cards, card]);

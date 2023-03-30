@@ -2,6 +2,7 @@ import { v4 as uuid } from 'uuid';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
+import { ErrorField } from '../ErrorField/ErrorField';
 import { Button } from '../Button/Button';
 import { Select } from '../Select/Select';
 import { Input } from '../Input/Input';
@@ -29,10 +30,6 @@ export const Form = (props: Props) => {
   const [successMessage, setSuccessMessage] = useState(false);
   const [disabledPrice, setDisabledPrice] = useState(false);
 
-  //     photo:
-  //       this.photoRef.current?.files && this.photoRef.current?.files.length !== 0
-  //         ? URL.createObjectURL(this.photoRef.current.files[0])
-  //         : '',
   const {
     register,
     handleSubmit,
@@ -40,7 +37,7 @@ export const Form = (props: Props) => {
     resetField,
     formState: { errors },
     watch,
-  } = useForm<Event>({ defaultValues: { photo: '' } });
+  } = useForm<Event>();
 
   const paymentValue = watch('payment');
 
@@ -55,9 +52,10 @@ export const Form = (props: Props) => {
   }, [paymentValue, resetField]);
 
   const onSubmit = (data: Event) => {
+    const photoURL = data.photo ? URL.createObjectURL(data.photo[0]) : '';
     setSuccessMessage(true);
     setTimeout(() => setSuccessMessage(false), 2000);
-    props.addCard({ ...data, id: uuid() });
+    props.addCard({ ...data, id: uuid(), photoURL: photoURL });
     reset();
   };
 
@@ -72,7 +70,7 @@ export const Form = (props: Props) => {
               validate: categoryRules,
             })}
           />
-          <ErrorMessage errors={errors} name="category" />
+          <ErrorField error={errors.category?.message} />
           <Input
             label={'Event name:'}
             type={'text'}
@@ -80,7 +78,7 @@ export const Form = (props: Props) => {
               validate: eventRules,
             })}
           />
-          <ErrorMessage errors={errors} name="name" />
+          <ErrorField error={errors.name?.message} />
           <Input
             label={'Date:'}
             type={'date'}
@@ -88,7 +86,7 @@ export const Form = (props: Props) => {
               validate: dateRules,
             })}
           />
-          <ErrorMessage errors={errors} name="date" />
+          <ErrorField error={errors.date?.message} />
           <Input
             label={'Time:'}
             type={'time'}
@@ -96,7 +94,7 @@ export const Form = (props: Props) => {
               validate: timeRules,
             })}
           />
-          <ErrorMessage errors={errors} name="time" />
+          <ErrorField error={errors.time?.message} />
           <Input
             label={'Address:'}
             type={'text'}
@@ -104,7 +102,7 @@ export const Form = (props: Props) => {
               validate: addressRules,
             })}
           />
-          <ErrorMessage errors={errors} name="address" />
+          <ErrorField error={errors.address?.message} />
           <Input
             label={'Phone:'}
             type={'text'}
@@ -112,7 +110,7 @@ export const Form = (props: Props) => {
               validate: phoneRules,
             })}
           />
-          <ErrorMessage errors={errors} name="contact" />
+          <ErrorField error={errors.contact?.message} />
         </div>
         <div className={style.wrapperColumn}>
           <div>
@@ -127,7 +125,7 @@ export const Form = (props: Props) => {
                 })}
               />
             ))}
-            <ErrorMessage errors={errors} name="payment" />
+            <ErrorField error={errors.payment?.message} />
           </div>
           <Input
             label={'Minimum price:'}
@@ -138,7 +136,7 @@ export const Form = (props: Props) => {
               validate: paymentValue !== 'Free' ? priceRules : {},
             })}
           />
-          <ErrorMessage errors={errors} name="minPrice" />
+          <ErrorField error={errors.minPrice?.message} />
           <Input
             label={'Maximum price:'}
             type={'number'}
@@ -148,7 +146,7 @@ export const Form = (props: Props) => {
               validate: paymentValue !== 'Free' ? priceRules : {},
             })}
           />
-          <ErrorMessage errors={errors} name="maxPrice" />
+          <ErrorField error={errors.maxPrice?.message} />
           <Input
             label={'Photo:'}
             type={'file'}
@@ -156,7 +154,7 @@ export const Form = (props: Props) => {
               validate: photoRules,
             })}
           />
-          <ErrorMessage errors={errors} name="photo" />
+          <ErrorField error={errors.photo?.message} />
           <Input
             label={'I agree with the rules of the site'}
             type={'checkbox'}
@@ -164,7 +162,7 @@ export const Form = (props: Props) => {
               validate: agreementRules,
             })}
           />
-          <ErrorMessage errors={errors} name="checkBox" />
+          <ErrorField error={errors.checkBox?.message} />
         </div>
       </div>
       {successMessage ? (
