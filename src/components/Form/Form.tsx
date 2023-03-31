@@ -1,25 +1,13 @@
 import { v4 as uuid } from 'uuid';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { ErrorMessage } from '@hookform/error-message';
 import { ErrorField } from '../ErrorField/ErrorField';
 import { Button } from '../Button/Button';
 import { Select } from '../Select/Select';
 import { Input } from '../Input/Input';
 import { optionsForSelect, radioData } from './optionsData';
 import { Event } from '../../types';
-import {
-  categoryRules,
-  eventRules,
-  dateRules,
-  timeRules,
-  addressRules,
-  phoneRules,
-  paymentRules,
-  priceRules,
-  photoRules,
-  agreementRules,
-} from './validationRules';
+import { validation } from './validationRules';
 import style from './Form.module.scss';
 
 type Props = {
@@ -37,9 +25,12 @@ export const Form = (props: Props) => {
     resetField,
     formState: { errors },
     watch,
-  } = useForm<Event>();
+  } = useForm<Event>({
+    reValidateMode: 'onSubmit',
+  });
 
   const paymentValue = watch('payment');
+  const minPrice = watch('minPrice');
 
   useEffect(() => {
     if (paymentValue === 'Free') {
@@ -52,6 +43,7 @@ export const Form = (props: Props) => {
   }, [paymentValue, resetField]);
 
   const onSubmit = (data: Event) => {
+    console.log(data.photo);
     const photoURL = data.photo ? URL.createObjectURL(data.photo[0]) : '';
     setSuccessMessage(true);
     setTimeout(() => setSuccessMessage(false), 2000);
@@ -67,7 +59,7 @@ export const Form = (props: Props) => {
             label={'Event category'}
             options={optionsForSelect}
             {...register('category', {
-              validate: categoryRules,
+              validate: validation.categoryRules,
             })}
           />
           <ErrorField error={errors.category?.message} />
@@ -75,7 +67,7 @@ export const Form = (props: Props) => {
             label={'Event name:'}
             type={'text'}
             {...register('name', {
-              validate: eventRules,
+              validate: validation.eventRules,
             })}
           />
           <ErrorField error={errors.name?.message} />
@@ -83,7 +75,7 @@ export const Form = (props: Props) => {
             label={'Date:'}
             type={'date'}
             {...register('date', {
-              validate: dateRules,
+              validate: validation.dateRules,
             })}
           />
           <ErrorField error={errors.date?.message} />
@@ -91,7 +83,7 @@ export const Form = (props: Props) => {
             label={'Time:'}
             type={'time'}
             {...register('time', {
-              validate: timeRules,
+              validate: validation.timeRules,
             })}
           />
           <ErrorField error={errors.time?.message} />
@@ -99,7 +91,7 @@ export const Form = (props: Props) => {
             label={'Address:'}
             type={'text'}
             {...register('address', {
-              validate: addressRules,
+              validate: validation.addressRules,
             })}
           />
           <ErrorField error={errors.address?.message} />
@@ -107,7 +99,7 @@ export const Form = (props: Props) => {
             label={'Phone:'}
             type={'text'}
             {...register('contact', {
-              validate: phoneRules,
+              validate: validation.phoneRules,
             })}
           />
           <ErrorField error={errors.contact?.message} />
@@ -121,7 +113,7 @@ export const Form = (props: Props) => {
                 label={radio.label}
                 value={radio.value}
                 {...register('payment', {
-                  validate: paymentRules,
+                  validate: validation.paymentRules,
                 })}
               />
             ))}
@@ -133,7 +125,7 @@ export const Form = (props: Props) => {
             min={'1'}
             disabled={disabledPrice}
             {...register('minPrice', {
-              validate: paymentValue !== 'Free' ? priceRules : {},
+              validate: paymentValue !== 'Free' ? validation.priceRules : {},
             })}
           />
           <ErrorField error={errors.minPrice?.message} />
@@ -143,7 +135,15 @@ export const Form = (props: Props) => {
             min={'1'}
             disabled={disabledPrice}
             {...register('maxPrice', {
-              validate: paymentValue !== 'Free' ? priceRules : {},
+              validate:
+                paymentValue !== 'Free'
+                  ? {
+                      ...validation.priceRules,
+                      comparison: (value) =>
+                        (value && Number(value) > Number(minPrice)) ||
+                        'The minimum amount is greater than the maximum',
+                    }
+                  : {},
             })}
           />
           <ErrorField error={errors.maxPrice?.message} />
@@ -151,7 +151,7 @@ export const Form = (props: Props) => {
             label={'Photo:'}
             type={'file'}
             {...register('photo', {
-              validate: photoRules,
+              validate: validation.photoRules,
             })}
           />
           <ErrorField error={errors.photo?.message} />
@@ -159,7 +159,7 @@ export const Form = (props: Props) => {
             label={'I agree with the rules of the site'}
             type={'checkbox'}
             {...register('checkBox', {
-              validate: agreementRules,
+              validate: validation.agreementRules,
             })}
           />
           <ErrorField error={errors.checkBox?.message} />

@@ -9,9 +9,9 @@ export interface Event {
   address: string;
   contact: string;
   payment: string;
-  minPrice: string;
-  maxPrice: string;
-  checkBox: boolean;
+  minPrice?: string;
+  maxPrice?: string;
+  checkBox?: boolean;
 }
 
 export interface Errors {

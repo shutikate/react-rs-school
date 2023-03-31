@@ -7,7 +7,7 @@ describe('Testing card', () => {
     const data = {
       id: '1',
       category: 'Concerts',
-      photo: '',
+      photoURL: '',
       name: 'Fall Out Boy',
       date: '17.10.2023',
       time: '21:00',

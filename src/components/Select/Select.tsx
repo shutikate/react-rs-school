@@ -12,11 +12,11 @@ interface SelectProps {
 }
 
 export const Select = forwardRef<HTMLSelectElement, SelectProps>((SelectProps, ref) => {
-  const { label, options, ...rest } = SelectProps;
+  const { label, options, ...props } = SelectProps;
   return (
     <label>
       {label}
-      <select ref={ref} className={style.select} {...rest}>
+      <select ref={ref} className={style.select} {...props}>
         {options.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}
