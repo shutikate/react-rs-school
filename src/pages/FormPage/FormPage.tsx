@@ -1,32 +1,26 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import { Form } from '../../components/Form/Form';
 import { Event } from '../../types';
 import { CardEvent } from '../../components/CardEvent/CardEvent';
 import style from './FormPage.module.scss';
 
-type Props = Record<string, never>;
-type State = { cards: Array<Event> };
+type Cards = Array<Event>;
 
-export class FormPage extends Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = { cards: [] };
-  }
+export const FormPage = () => {
+  const [cards, setCards] = useState<Cards>([]);
 
-  addCard = (card: Event) => {
-    this.setState({ cards: [...this.state.cards, card] });
+  const addCard = (card: Event) => {
+    setCards([...cards, card]);
   };
 
-  render() {
-    return (
-      <div>
-        <Form addCard={this.addCard} />
-        <div className={style.cardWrapper}>
-          {this.state.cards.map((card) => (
-            <CardEvent key={card.id} {...card} />
-          ))}
-        </div>
+  return (
+    <div>
+      <Form addCard={addCard} />
+      <div className={style.cardWrapper}>
+        {cards.map((card) => (
+          <CardEvent key={card.id} {...card} />
+        ))}
       </div>
-    );
-  }
-}
+    </div>
+  );
+};

@@ -1,16 +1,17 @@
 export interface Event {
   id?: string;
-  category: string | undefined;
-  photo: string;
-  name: string | undefined;
-  date: string | undefined;
-  time: string | undefined;
-  address: string | undefined;
-  contact: string | undefined;
-  payment: string | null | undefined;
-  minPrice?: string | undefined;
-  maxPrice?: string | undefined;
-  checkBox?: boolean | undefined;
+  category: string;
+  photo?: FileList;
+  photoURL: string;
+  name: string;
+  date: string;
+  time: string;
+  address: string;
+  contact: string;
+  payment: string;
+  minPrice?: string;
+  maxPrice?: string;
+  checkBox?: boolean;
 }
 
 export interface Errors {

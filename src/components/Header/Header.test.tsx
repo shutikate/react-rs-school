@@ -2,14 +2,14 @@ import { it, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { Header } from './Header';
 import userEvent from '@testing-library/user-event';
-import { BrowserRouter } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
 
 describe('Testing Header', () => {
   it('Click the about-us link', async () => {
     render(
-      <BrowserRouter>
-        <Header location={{ pathname: '/about-us' }} />
-      </BrowserRouter>
+      <MemoryRouter initialEntries={['/about-us']}>
+        <Header />
+      </MemoryRouter>
     );
     expect(screen.getByText('about us')).toBeInTheDocument();
     const user = userEvent.setup();

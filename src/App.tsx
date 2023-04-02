@@ -6,7 +6,7 @@ import {
   Navigate,
 } from 'react-router-dom';
 import { Home } from './pages/Home/Home';
-import Layout from './components/Layout/Layout';
+import { Layout } from './components/Layout/Layout';
 import { AboutUs } from './pages/AboutUs/AboutUs';
 import { FormPage } from './pages/FormPage/FormPage';
 import { NotFound } from './pages/NotFound/NotFound';
@@ -28,5 +28,3 @@ const router = createBrowserRouter(
 export function App() {
   return <RouterProvider router={router} />;
 }
-
-export default App;

@@ -1,45 +1,42 @@
-import { Component } from 'react';
 import style from './SearchBar.module.scss';
 import { Button } from '../Button/Button';
+import { useEffect, useRef, useState } from 'react';
 
-type Props = Record<string, never>;
-type State = { searchValue: string };
+export const SearchBar = () => {
+  const [searchValue, setSearchValue] = useState(localStorage.getItem('sk-search-value') || '');
 
-export class SearchBar extends Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = { searchValue: localStorage.getItem('sk-search-value') || '' };
-  }
+  const searchRef = useRef(searchValue);
 
-  componentDidMount() {
-    window.addEventListener('beforeunload', this.handleBeforeUnload);
-  }
+  useEffect(() => {
+    searchRef.current = searchValue;
+  }, [searchValue]);
 
-  componentWillUnmount(): void {
-    localStorage.setItem('sk-search-value', this.state.searchValue);
-  }
-
-  changeInputValue = (event: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ searchValue: event.target.value });
+  const handleBeforeUnload = () => {
+    localStorage.setItem('sk-search-value', searchRef.current);
   };
 
-  handleBeforeUnload = () => {
-    localStorage.setItem('sk-search-value', this.state.searchValue);
+  useEffect(() => {
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => {
+      localStorage.setItem('sk-search-value', searchRef.current);
+    };
+  }, []);
+
+  const changeInputValue = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(event.target.value);
   };
 
-  render() {
-    return (
-      <div className={style.container}>
-        <input
-          aria-label="search"
-          type="text"
-          placeholder="Search"
-          className={style.input}
-          value={this.state.searchValue}
-          onChange={this.changeInputValue}
-        ></input>
-        <Button type={'button'} text={'Search'} />
-      </div>
-    );
-  }
-}
+  return (
+    <div className={style.container}>
+      <input
+        aria-label="search"
+        type="text"
+        placeholder="Search"
+        className={style.input}
+        value={searchValue}
+        onChange={changeInputValue}
+      ></input>
+      <Button type={'button'} text={'Search'} />
+    </div>
+  );
+};

@@ -30,7 +30,7 @@ describe('Testing Form', () => {
     await userEvent.type(minPrice, '10');
     await userEvent.type(maxPrice, '20');
     global.URL.createObjectURL = vi.fn().mockImplementation((x) => x);
-    const file = new File(['hello'], 'hello.png');
+    const file = new File(['hello'], 'hello.png', { type: 'image/' });
     await userEvent.upload(photo, file);
     await userEvent.click(agreement);
 
@@ -47,13 +47,11 @@ describe('Testing Form', () => {
 
     const category = screen.getByLabelText('Event category');
     const phone = screen.getByLabelText('Phone:');
-    const payment = screen.getByLabelText('Free');
     const minPrice = screen.getByLabelText('Minimum price:');
     const maxPrice = screen.getByLabelText('Maximum price:');
 
     await userEvent.selectOptions(category, 'Check category');
     await userEvent.type(phone, 'hello');
-    await userEvent.click(payment);
     await userEvent.type(minPrice, '10');
     await userEvent.type(maxPrice, '20');
 
@@ -67,9 +65,7 @@ describe('Testing Form', () => {
     expect(screen.getByText('Time of event is required')).toBeInTheDocument();
     expect(screen.getByText('Address of event is required')).toBeInTheDocument();
     expect(screen.getByText('Only numbers allowed')).toBeInTheDocument();
-    expect(
-      screen.getByText('Your event is free, please leave these fields blank')
-    ).toBeInTheDocument();
+    expect(screen.getByText('Please, check one of this')).toBeInTheDocument();
     expect(screen.getByText('Select file to upload')).toBeInTheDocument();
     expect(screen.getByText('Please, check this')).toBeInTheDocument();
   });
