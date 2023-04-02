@@ -43,7 +43,6 @@ export const Form = (props: Props) => {
   }, [paymentValue, resetField]);
 
   const onSubmit = (data: Event) => {
-    console.log(data.photo);
     const photoURL = data.photo ? URL.createObjectURL(data.photo[0]) : '';
     setSuccessMessage(true);
     setTimeout(() => setSuccessMessage(false), 2000);

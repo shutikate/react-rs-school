@@ -42,7 +42,7 @@ export const validation = {
   photoRules: {
     required: (value: FileList | undefined) => value?.length !== 0 || 'Select file to upload',
     typeImage: (value: FileList | undefined) =>
-      (value?.length && value[0].type.startsWith('image')) || 'Please, upload image',
+      (value?.length && value[0].type.startsWith('image')) || 'Only image type can be upload',
   },
 
   agreementRules: {
