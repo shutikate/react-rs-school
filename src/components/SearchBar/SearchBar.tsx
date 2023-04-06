@@ -1,42 +1,36 @@
-import style from './SearchBar.module.scss';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { Button } from '../Button/Button';
-import { useEffect, useRef, useState } from 'react';
+import style from './SearchBar.module.scss';
 
-export const SearchBar = () => {
+type Props = {
+  updateCards: (value: string) => void;
+};
+
+interface Search {
+  searchValue: string;
+}
+
+export const SearchBar = ({ updateCards }: Props) => {
   const [searchValue, setSearchValue] = useState(localStorage.getItem('sk-search-value') || '');
+  const { register, handleSubmit } = useForm<Search>();
 
-  const searchRef = useRef(searchValue);
-
-  useEffect(() => {
-    searchRef.current = searchValue;
-  }, [searchValue]);
-
-  const handleBeforeUnload = () => {
-    localStorage.setItem('sk-search-value', searchRef.current);
-  };
-
-  useEffect(() => {
-    window.addEventListener('beforeunload', handleBeforeUnload);
-    return () => {
-      localStorage.setItem('sk-search-value', searchRef.current);
-    };
-  }, []);
-
-  const changeInputValue = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchValue(event.target.value);
+  const onSubmit = (data: Search) => {
+    localStorage.setItem('sk-search-value', data.searchValue);
+    setSearchValue(data.searchValue);
+    updateCards(data.searchValue);
   };
 
   return (
-    <div className={style.container}>
+    <form onSubmit={handleSubmit(onSubmit)} className={style.container}>
       <input
         aria-label="search"
         type="text"
-        placeholder="Search"
+        {...register('searchValue')}
+        defaultValue={searchValue}
         className={style.input}
-        value={searchValue}
-        onChange={changeInputValue}
       ></input>
-      <Button type={'button'} text={'Search'} />
-    </div>
+      <Button type={'submit'} text={'Search'} />
+    </form>
   );
 };
