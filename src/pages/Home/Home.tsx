@@ -29,7 +29,6 @@ export const Home = () => {
       .catch((err) => {
         setIsLoading(false);
         setError(err.message);
-        setCards([]);
       });
   };
 
@@ -41,11 +40,12 @@ export const Home = () => {
     <>
       <SearchBar updateCards={updateCards} />
       <h2>Featured Events</h2>
-      {error && <div className={style.error}>{error}</div>}
       {isLoading ? (
         <div className={style.spinner}>
           <Oval height="80" width="80" color="#4fa94d" />
         </div>
+      ) : error ? (
+        <p className={style.error}>{error}</p>
       ) : (
         <div className={style.cardWrapper}>
           {cards.map((card) => (

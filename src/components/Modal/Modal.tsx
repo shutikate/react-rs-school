@@ -19,11 +19,7 @@ export const Modal: FC<Modal> = ({ id, onClose }) => {
     getEvent(id)
       .then((event) => {
         setIsLoading(false);
-        if (!Object.keys(event).length) {
-          setError('Not found');
-        } else {
-          setCard(event);
-        }
+        setCard(event);
       })
       .catch((err) => {
         setIsLoading(false);

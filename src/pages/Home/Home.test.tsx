@@ -1,5 +1,5 @@
 import { vi } from 'vitest';
-import { render, screen, waitFor, act } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import { Home } from './Home';
 
 const mockEvents = [
@@ -38,17 +38,24 @@ vi.mock('../../api/events', () => ({
 
 describe('Testing Home', () => {
   it('Featured Events has to be presented', async () => {
-    await act(async () => render(<Home />));
-    expect(screen.getByText('Featured Events')).toBeInTheDocument();
+    render(<Home />);
+    await waitFor(() => {
+      expect(screen.getByText('Featured Events')).toBeInTheDocument();
+    });
   });
 
-  // it('Show loading', async () => {
-  //   await act(async () => render(<Home />));
-  //   expect(screen.getByTestId('oval-loading')).toBeInTheDocument();
-  // });
+  it('Show loading', async () => {
+    render(<Home />);
+    await waitFor(() => {
+      expect(screen.getByTestId('oval-loading')).toBeInTheDocument();
+    });
+    await waitFor(() => {
+      expect(screen.queryByTestId('oval-loading')).toBeNull();
+    });
+  });
 
   it('All cards has to be rendered', async () => {
-    await act(async () => render(<Home />));
+    render(<Home />);
     await waitFor(() => {
       mockEvents.map((event) => {
         const cardElement = screen.getByTestId(event.id);
