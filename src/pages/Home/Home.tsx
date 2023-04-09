@@ -10,6 +10,7 @@ import { Oval } from 'react-loader-spinner';
 export const Home = () => {
   const [cards, setCards] = useState<Event[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
   const [idForModal, setIdForModal] = useState('');
 
   useEffect(() => {
@@ -19,10 +20,17 @@ export const Home = () => {
 
   const updateCards = (value: string) => {
     setIsLoading(true);
-    getEvents(value).then((events) => {
-      setIsLoading(false);
-      setCards(events);
-    });
+    getEvents(value)
+      .then((events) => {
+        setIsLoading(false);
+        setError(null);
+        setCards(events);
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        setError(err.message);
+        setCards([]);
+      });
   };
 
   const openModal = (id: string) => {
@@ -33,6 +41,7 @@ export const Home = () => {
     <>
       <SearchBar updateCards={updateCards} />
       <h2>Featured Events</h2>
+      {error && <div className={style.error}>{error}</div>}
       {isLoading ? (
         <div className={style.spinner}>
           <Oval height="80" width="80" color="#4fa94d" />

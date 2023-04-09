@@ -10,15 +10,25 @@ interface Modal {
 }
 
 export const Modal: FC<Modal> = ({ id, onClose }) => {
-  const [card, setCard] = useState<Event>();
+  const [card, setCard] = useState<Event | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<null | string>(null);
 
   useEffect(() => {
     setIsLoading(true);
-    getEvent(id).then((event) => {
-      setIsLoading(false);
-      setCard(event);
-    });
+    getEvent(id)
+      .then((event) => {
+        setIsLoading(false);
+        if (!Object.keys(event).length) {
+          setError('Not found');
+        } else {
+          setCard(event);
+        }
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        setError(err.message);
+      });
   }, [id]);
 
   return (
@@ -28,6 +38,8 @@ export const Modal: FC<Modal> = ({ id, onClose }) => {
           <div className={style.spinner}>
             <Oval height={80} width={80} color="#4fa94d" />
           </div>
+        ) : error ? (
+          <p>{error}</p>
         ) : (
           <>
             <div>
