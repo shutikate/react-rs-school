@@ -1,4 +1,4 @@
-import { it } from 'vitest';
+import { it, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { CardEvent } from './CardEvent';
 
@@ -15,7 +15,7 @@ describe('Testing card', () => {
       contact: '+48 784563723',
       payment: 'Pay online',
     };
-    render(<CardEvent {...data} />);
+    render(<CardEvent card={data} onClick={vi.fn()} />);
     expect(screen.getByAltText('Photo of the event')).toBeInTheDocument();
   });
 });

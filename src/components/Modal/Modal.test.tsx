@@ -1,6 +1,6 @@
 import { vi } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
-import { Home } from './Home';
+import { Modal } from './Modal';
 
 const mockEvents = [
   {
@@ -33,34 +33,27 @@ const mockEvents = [
 ];
 
 vi.mock('../../api/events', () => ({
-  getEvents: vi.fn().mockImplementation(() => Promise.resolve(mockEvents)),
+  getEvent: vi
+    .fn()
+    .mockImplementation((id) => Promise.resolve(mockEvents.find((event) => event.id === id))),
 }));
 
-describe('Testing Home', () => {
-  it('Featured Events has to be presented', async () => {
-    render(<Home />);
-    await waitFor(() => {
-      expect(screen.getByText('Featured Events')).toBeInTheDocument();
-    });
-  });
+describe('Testing Modal', () => {
+  it('rendering correct card', async () => {
+    const onClose = vi.fn();
 
-  it('Show loading', async () => {
-    render(<Home />);
-    await waitFor(() => {
-      expect(screen.getByTestId('loader')).toBeInTheDocument();
-    });
-    await waitFor(() => {
-      expect(screen.queryByTestId('loader')).toBeNull();
-    });
-  });
+    render(<Modal id={'1'} onClose={onClose} />);
 
-  it('All cards has to be rendered', async () => {
-    render(<Home />);
+    expect(screen.getByTestId('loader')).toBeInTheDocument();
+
     await waitFor(() => {
-      mockEvents.map((event) => {
-        const cardElement = screen.getByTestId(event.id);
-        expect(cardElement).toBeInTheDocument();
-      });
+      expect(screen.getByText('Concerts')).toBeInTheDocument();
+      expect(screen.getByText('Fall Out Boy')).toBeInTheDocument();
+      expect(screen.queryByText('For Children')).not.toBeInTheDocument();
+      expect(screen.getByText('+48 784563723')).toBeInTheDocument();
+      expect(screen.getByText('Warsaw Łazienkowska 6A')).toBeInTheDocument();
+      expect(screen.getByText('17.10.2023')).toBeInTheDocument();
+      expect(screen.getByText('Pay online')).toBeInTheDocument();
     });
   });
 });

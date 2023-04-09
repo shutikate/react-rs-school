@@ -18,7 +18,7 @@ export const FormPage = () => {
       <Form addCard={addCard} />
       <div className={style.cardWrapper}>
         {cards.map((card) => (
-          <CardEvent key={card.id} {...card} />
+          <CardEvent key={card.id} card={card} />
         ))}
       </div>
     </div>

@@ -1,0 +1,89 @@
+body:has(.modal) {
+  overflow: hidden;
+}
+
+.modal {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.wrapper {
+  padding: 20px;
+  height: 640px;
+  width: 500px;
+  background-color: #ffffff;
+}
+
+.infoBlock {
+  border-bottom: 1px solid rgb(33, 53, 71, 0.2);
+  margin-bottom: 10px;
+}
+
+.infoLine {
+  display: flex;
+  justify-content: space-between;
+
+  @media screen and (max-width: 1000px) {
+    flex-direction: column;
+  }
+}
+
+.image {
+  margin-bottom: 20px;
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
+
+.date,
+.place,
+.phone,
+.time {
+  position: relative;
+  margin: 0 0 10px 25px;
+}
+
+.date::before {
+  background: url('../../assets/icons/calendar.svg') no-repeat;
+}
+
+.time::before {
+  background: url('../../assets/icons/clock.svg') no-repeat;
+}
+
+.place::before {
+  background: url('../../assets/icons/marker.svg') no-repeat;
+}
+
+.phone::before {
+  background: url('../../assets/icons/phone.svg') no-repeat;
+}
+
+.date::before,
+.time::before,
+.place::before,
+.phone::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: -25px;
+  background-size: 20px 20px;
+  width: 20px;
+  height: 20px;
+}
+
+.closeIcon {
+  margin: 0 0 0 95%;
+  background: url('../../assets/icons/close.svg');
+  background-size: 20px 20px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
