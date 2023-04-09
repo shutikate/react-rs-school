@@ -2,24 +2,21 @@ import { FC } from 'react';
 import { Event } from '../../types';
 import style from './CardEvent.module.scss';
 
-export const CardEvent: FC<Event> = ({ ...props }) => {
+interface Props {
+  card: Event;
+  onClick?: () => void;
+}
+
+export const CardEvent: FC<Props> = ({ card, onClick }) => {
+  const { id, photoURL, category, name, date } = { ...card };
   return (
-    <div data-testid={props.id} className={style.wrapper}>
+    <div data-testid={id} className={style.wrapper} onClick={onClick}>
       <div>
-        <img src={props.photoURL} alt={'Photo of the event'} className={style.image}></img>
-        <h5>{props.category}</h5>
-        <h4>{props.name}</h4>
-        <div className={style.infoBlock}>
-          <div className={style.infoLine}>
-            <p className={style.date}>{props.date}</p>
-            <p className={style.time}>{props.time}</p>
-          </div>
-          <p className={style.place}>{props.address}</p>
-          <p className={style.phone}>{props.contact}</p>
-        </div>
+        <img src={photoURL} alt={'Photo of the event'} className={style.image}></img>
+        <h5>{category}</h5>
+        <h4>{name}</h4>
         <div className={style.infoLine}>
-          <p>{props.payment}</p>
-          <p>{props.minPrice && props.maxPrice ? `${props.minPrice}$ - ${props.maxPrice}$` : ''}</p>
+          <p className={style.date}>{date}</p>
         </div>
       </div>
     </div>
