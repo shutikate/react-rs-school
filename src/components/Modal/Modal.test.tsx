@@ -44,7 +44,7 @@ describe('Testing Modal', () => {
 
     render(<Modal id={'1'} onClose={onClose} />);
 
-    expect(screen.getByTestId('oval-loading')).toBeInTheDocument();
+    expect(screen.getByTestId('loader')).toBeInTheDocument();
 
     await waitFor(() => {
       expect(screen.getByText('Concerts')).toBeInTheDocument();

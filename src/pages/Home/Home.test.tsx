@@ -47,10 +47,10 @@ describe('Testing Home', () => {
   it('Show loading', async () => {
     render(<Home />);
     await waitFor(() => {
-      expect(screen.getByTestId('oval-loading')).toBeInTheDocument();
+      expect(screen.getByTestId('loader')).toBeInTheDocument();
     });
     await waitFor(() => {
-      expect(screen.queryByTestId('oval-loading')).toBeNull();
+      expect(screen.queryByTestId('loader')).toBeNull();
     });
   });
 

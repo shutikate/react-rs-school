@@ -1,8 +1,8 @@
 import { useState, useEffect, FC } from 'react';
 import { Event } from '../../types';
 import { getEvent } from '../../api/events';
+import { Loader } from '../Loader/Loader';
 import style from './Modal.module.scss';
-import { Oval } from 'react-loader-spinner';
 
 interface Modal {
   id: string;
@@ -31,9 +31,7 @@ export const Modal: FC<Modal> = ({ id, onClose }) => {
     <div className={style.modal} onClick={onClose}>
       <div className={style.wrapper} onClick={(event) => event.stopPropagation()}>
         {isLoading ? (
-          <div className={style.spinner}>
-            <Oval height={80} width={80} color="#4fa94d" />
-          </div>
+          <Loader />
         ) : error ? (
           <p>{error}</p>
         ) : (

@@ -3,9 +3,9 @@ import { getEvents } from '../../api/events';
 import { SearchBar } from '../../components/SearchBar/SearchBar';
 import { CardEvent } from '../../components/CardEvent/CardEvent';
 import { Modal } from '../../components/Modal/Modal';
+import { Loader } from '../../components/Loader/Loader';
 import { Event } from '../../types';
 import style from './Home.module.scss';
-import { Oval } from 'react-loader-spinner';
 
 export const Home = () => {
   const [cards, setCards] = useState<Event[]>([]);
@@ -41,9 +41,7 @@ export const Home = () => {
       <SearchBar updateCards={updateCards} />
       <h2>Featured Events</h2>
       {isLoading ? (
-        <div className={style.spinner}>
-          <Oval height="80" width="80" color="#4fa94d" />
-        </div>
+        <Loader />
       ) : error ? (
         <p className={style.error}>{error}</p>
       ) : (
