@@ -22,13 +22,14 @@ export const Home = () => {
     setIsLoading(true);
     getEvents(value)
       .then((events) => {
-        setIsLoading(false);
         setError(null);
         setCards(events);
       })
       .catch((err) => {
-        setIsLoading(false);
         setError(err.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
