@@ -8,13 +8,12 @@ import { Input } from '../Input/Input';
 import { optionsForSelect, radioData } from './optionsData';
 import { Event } from '../../types';
 import { validation } from './validationRules';
+import { createCard } from '../../store/slices/formCardsSlice';
+import { useAppDispatch } from '../../hooks/redux';
 import style from './Form.module.scss';
 
-type Props = {
-  addCard: (card: Event) => void;
-};
-
-export const Form = (props: Props) => {
+export const Form = () => {
+  const dispatch = useAppDispatch();
   const [successMessage, setSuccessMessage] = useState(false);
   const [disabledPrice, setDisabledPrice] = useState(false);
 
@@ -43,10 +42,11 @@ export const Form = (props: Props) => {
   }, [paymentValue, resetField]);
 
   const onSubmit = (data: Event) => {
-    const photoURL = data.photo ? URL.createObjectURL(data.photo[0]) : '';
+    const { photo, ...dataPayload } = data;
+    const photoURL = photo ? URL.createObjectURL(photo[0]) : '';
     setSuccessMessage(true);
     setTimeout(() => setSuccessMessage(false), 2000);
-    props.addCard({ ...data, id: uuid(), photoURL: photoURL });
+    dispatch(createCard({ ...dataPayload, id: uuid(), photoURL: photoURL }));
     reset();
   };
 

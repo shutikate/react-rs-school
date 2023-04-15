@@ -1,12 +1,22 @@
 import { it, vi } from 'vitest';
+import { Provider } from 'react-redux';
+import { configureStore } from '@reduxjs/toolkit';
+import { rootReducer } from '../../store/store';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { SearchBar } from './SearchBar';
 
+const testStore = configureStore({
+  reducer: rootReducer,
+});
+
 describe('Testing search bar', () => {
-  it('save value to local storage', async () => {
-    const updateCards = vi.fn();
-    render(<SearchBar updateCards={updateCards} />);
+  it('save value to store', async () => {
+    render(
+      <Provider store={testStore}>
+        <SearchBar />
+      </Provider>
+    );
 
     const input = screen.getByRole('textbox', { name: /search/i });
     await userEvent.type(input, 'Hello');
@@ -15,6 +25,6 @@ describe('Testing search bar', () => {
     const button = screen.getByText('Search');
     await user.click(button);
 
-    expect(localStorage.getItem('sk-search-value') || '').toEqual('Hello');
+    expect(testStore.getState().searchValueReducer.searchValue).toEqual('Hello');
   });
 });

@@ -1,8 +1,12 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import eventsReducer from './reducers/eventsSlice';
+import eventsReducer from './slices/eventsSlice';
+import searchValueReducer from './slices/searchSlice';
+import formCardsReducer from './slices/formCardsSlice';
 
-const rootReducer = combineReducers({
+export const rootReducer = combineReducers({
   eventsReducer,
+  searchValueReducer,
+  formCardsReducer,
 });
 
 export const store = configureStore({

@@ -1,6 +1,13 @@
 import { vi } from 'vitest';
+import { Provider } from 'react-redux';
+import { configureStore } from '@reduxjs/toolkit';
+import { rootReducer } from '../../store/store';
 import { render, screen, waitFor } from '@testing-library/react';
 import { Home } from './Home';
+
+const testStore = configureStore({
+  reducer: rootReducer,
+});
 
 const mockEvents = [
   {
@@ -38,14 +45,22 @@ vi.mock('../../api/events', () => ({
 
 describe('Testing Home', () => {
   it('Featured Events has to be presented', async () => {
-    render(<Home />);
+    render(
+      <Provider store={testStore}>
+        <Home />
+      </Provider>
+    );
     await waitFor(() => {
       expect(screen.getByText('Featured Events')).toBeInTheDocument();
     });
   });
 
   it('Show loading', async () => {
-    render(<Home />);
+    render(
+      <Provider store={testStore}>
+        <Home />
+      </Provider>
+    );
     await waitFor(() => {
       expect(screen.getByTestId('loader')).toBeInTheDocument();
     });
@@ -55,7 +70,11 @@ describe('Testing Home', () => {
   });
 
   it('All cards has to be rendered', async () => {
-    render(<Home />);
+    render(
+      <Provider store={testStore}>
+        <Home />
+      </Provider>
+    );
     await waitFor(() => {
       mockEvents.map((event) => {
         const cardElement = screen.getByTestId(event.id);

@@ -1,24 +1,20 @@
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useAppSelector, useAppDispatch } from '../../hooks/redux';
 import { Button } from '../Button/Button';
+import { changeValue } from '../../store/slices/searchSlice';
 import style from './SearchBar.module.scss';
-
-type Props = {
-  updateCards: (value: string) => void;
-};
 
 interface Search {
   searchValue: string;
 }
 
-export const SearchBar = ({ updateCards }: Props) => {
-  const [searchValue, setSearchValue] = useState(localStorage.getItem('sk-search-value') || '');
+export const SearchBar = () => {
+  const searchValue = useAppSelector((state) => state.searchValueReducer.searchValue);
+  const dispatch = useAppDispatch();
   const { register, handleSubmit } = useForm<Search>();
 
   const onSubmit = (data: Search) => {
-    localStorage.setItem('sk-search-value', data.searchValue);
-    setSearchValue(data.searchValue);
-    updateCards(data.searchValue);
+    dispatch(changeValue(data.searchValue));
   };
 
   return (
