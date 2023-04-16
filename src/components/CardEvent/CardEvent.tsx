@@ -17,6 +17,11 @@ export const CardEvent: FC<Props> = ({ card, onClick }) => {
         <h4>{name}</h4>
         <div className={style.infoLine}>
           <p className={style.date}>{date}</p>
+          <p className={style.time}>{card?.time}</p>
+        </div>
+        <div className={style.infoLine}>
+          <p>{card?.payment}</p>
+          <p>{card?.minPrice && card?.maxPrice ? `${card?.minPrice}$ - ${card?.maxPrice}$` : ''}</p>
         </div>
       </div>
     </div>

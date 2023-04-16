@@ -1,12 +1,22 @@
 import { render, screen } from '@testing-library/react';
 import { vi } from 'vitest';
+import { Provider } from 'react-redux';
+import { configureStore } from '@reduxjs/toolkit';
+import { rootReducer } from '../../store/store';
 import userEvent from '@testing-library/user-event';
 import { Form } from './Form';
 
+const testStore = configureStore({
+  reducer: rootReducer,
+});
+
 describe('Testing Form', () => {
   it('submit form', async () => {
-    const addCard = vi.fn();
-    render(<Form addCard={addCard} />);
+    render(
+      <Provider store={testStore}>
+        <Form />
+      </Provider>
+    );
 
     const category = screen.getByLabelText('Event category');
     const name = screen.getByLabelText('Event name:');
@@ -29,7 +39,7 @@ describe('Testing Form', () => {
     await userEvent.click(payment);
     await userEvent.type(minPrice, '10');
     await userEvent.type(maxPrice, '20');
-    global.URL.createObjectURL = vi.fn().mockImplementation((x) => x);
+    global.URL.createObjectURL = vi.fn().mockImplementation(() => 'test');
     const file = new File(['hello'], 'hello.png', { type: 'image/' });
     await userEvent.upload(photo, file);
     await userEvent.click(agreement);
@@ -37,13 +47,15 @@ describe('Testing Form', () => {
     const user = userEvent.setup();
     const button = screen.getByText('Create card');
     await user.click(button);
-
-    expect(addCard).toHaveBeenCalled();
+    expect(testStore.getState().formCardsReducer.formCards.length).toEqual(1);
   });
 
   it('show errors', async () => {
-    const addCard = vi.fn();
-    render(<Form addCard={addCard} />);
+    render(
+      <Provider store={testStore}>
+        <Form />
+      </Provider>
+    );
 
     const category = screen.getByLabelText('Event category');
     const phone = screen.getByLabelText('Phone:');

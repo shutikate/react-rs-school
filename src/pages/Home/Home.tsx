@@ -1,36 +1,21 @@
 import { useEffect, useState } from 'react';
-import { getEvents } from '../../api/events';
 import { SearchBar } from '../../components/SearchBar/SearchBar';
 import { CardEvent } from '../../components/CardEvent/CardEvent';
 import { Modal } from '../../components/Modal/Modal';
 import { Loader } from '../../components/Loader/Loader';
-import { Event } from '../../types';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { fetchEvents } from '../../store/thunks/fetchEvents';
 import style from './Home.module.scss';
 
 export const Home = () => {
-  const [cards, setCards] = useState<Event[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const searchValue = useAppSelector((state) => state.searchValueReducer.searchValue);
+  const dispatch = useAppDispatch();
+  const { events, isLoading, error } = useAppSelector((state) => state.eventsReducer);
   const [idForModal, setIdForModal] = useState('');
 
   useEffect(() => {
-    const value = localStorage.getItem('sk-search-value') || '';
-    updateCards(value);
-  }, []);
-
-  const updateCards = (value: string) => {
-    setIsLoading(true);
-    getEvents(value)
-      .then((events) => {
-        setIsLoading(false);
-        setError(null);
-        setCards(events);
-      })
-      .catch((err) => {
-        setIsLoading(false);
-        setError(err.message);
-      });
-  };
+    dispatch(fetchEvents(searchValue));
+  }, [dispatch, searchValue]);
 
   const openModal = (id: string) => {
     setIdForModal(id);
@@ -38,7 +23,7 @@ export const Home = () => {
 
   return (
     <>
-      <SearchBar updateCards={updateCards} />
+      <SearchBar />
       <h2>Featured Events</h2>
       {isLoading ? (
         <Loader />
@@ -46,12 +31,12 @@ export const Home = () => {
         <p className={style.error}>{error}</p>
       ) : (
         <div className={style.cardWrapper}>
-          {cards.map((card) => (
+          {events.map((event) => (
             <CardEvent
-              key={card.id}
-              card={card}
+              key={event.id}
+              card={event}
               onClick={() => {
-                openModal(card.id || '');
+                openModal(event.id || '');
               }}
             />
           ))}

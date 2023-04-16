@@ -37,7 +37,7 @@ export const Modal: FC<Modal> = ({ id, onClose }) => {
         ) : (
           <>
             <div>
-              <div className={style.closeIcon} onClick={onClose}></div>
+              <div className={style.closeIcon} onClick={onClose} role="button"></div>
               <h4>{card?.category}</h4>
               <h3>{card?.name}</h3>
             </div>
