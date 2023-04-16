@@ -1,5 +1,6 @@
 import { vi } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { Modal } from './Modal';
 
 const mockEvents = [
@@ -41,7 +42,6 @@ vi.mock('../../api/events', () => ({
 describe('Testing Modal', () => {
   it('rendering correct card', async () => {
     const onClose = vi.fn();
-
     render(<Modal id={'1'} onClose={onClose} />);
 
     expect(screen.getByTestId('loader')).toBeInTheDocument();
@@ -54,6 +54,18 @@ describe('Testing Modal', () => {
       expect(screen.getByText('Warsaw Łazienkowska 6A')).toBeInTheDocument();
       expect(screen.getByText('17.10.2023')).toBeInTheDocument();
       expect(screen.getByText('Pay online')).toBeInTheDocument();
+    });
+  });
+
+  it('close modal', async () => {
+    const onClose = vi.fn();
+    render(<Modal id={'1'} onClose={onClose} />);
+    await waitFor(async () => {
+      const user = userEvent.setup();
+      const closeButton = screen.getByRole('button');
+      await user.click(closeButton);
+
+      expect(onClose).toHaveBeenCalledTimes(1);
     });
   });
 });
