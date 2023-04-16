@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Event } from '../../types';
-import { fetchEvents } from '../thunks/fetchEventsThunk';
+import { fetchEvents } from '../thunks/fetchEvents';
 
 interface EventState {
   events: Event[];

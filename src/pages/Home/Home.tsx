@@ -3,10 +3,9 @@ import { SearchBar } from '../../components/SearchBar/SearchBar';
 import { CardEvent } from '../../components/CardEvent/CardEvent';
 import { Modal } from '../../components/Modal/Modal';
 import { Loader } from '../../components/Loader/Loader';
-import style from './Home.module.scss';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-// import { fetchEventsThunk } from '../../store/thunks/fetchEventsThunk';
-import { fetchEvents } from '../../store/thunks/fetchEventsThunk';
+import { fetchEvents } from '../../store/thunks/fetchEvents';
+import style from './Home.module.scss';
 
 export const Home = () => {
   const searchValue = useAppSelector((state) => state.searchValueReducer.searchValue);
