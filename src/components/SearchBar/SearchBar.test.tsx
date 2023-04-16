@@ -1,4 +1,4 @@
-import { it, vi } from 'vitest';
+import { it } from 'vitest';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import { rootReducer } from '../../store/store';
