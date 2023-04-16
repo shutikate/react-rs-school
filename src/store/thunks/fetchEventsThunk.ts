@@ -1,15 +1,16 @@
-import { AppDispatch } from '../store';
-import { eventsFetching, eventsFetchingError, eventsFetchingSuccess } from '../slices/eventsSlice';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import { getEvents } from '../../api/events';
 
-export const fetchEventsThunk = (value: string) => async (dispatch: AppDispatch) => {
-  try {
-    dispatch(eventsFetching());
-    const events = await getEvents(value);
-    dispatch(eventsFetchingSuccess(events));
-  } catch (error) {
-    if (error instanceof Error) {
-      dispatch(eventsFetchingError(error.message));
+export const fetchEvents = createAsyncThunk(
+  'event/fetchEvents',
+  async (value: string, thunkAPI) => {
+    try {
+      const events = await getEvents(value);
+      return events;
+    } catch (error) {
+      if (error instanceof Error) {
+        return thunkAPI.rejectWithValue(error.message);
+      }
     }
   }
-};
+);

@@ -5,7 +5,8 @@ import { Modal } from '../../components/Modal/Modal';
 import { Loader } from '../../components/Loader/Loader';
 import style from './Home.module.scss';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { fetchEventsThunk } from '../../store/thunks/fetchEventsThunk';
+// import { fetchEventsThunk } from '../../store/thunks/fetchEventsThunk';
+import { fetchEvents } from '../../store/thunks/fetchEventsThunk';
 
 export const Home = () => {
   const searchValue = useAppSelector((state) => state.searchValueReducer.searchValue);
@@ -14,7 +15,7 @@ export const Home = () => {
   const [idForModal, setIdForModal] = useState('');
 
   useEffect(() => {
-    dispatch(fetchEventsThunk(searchValue));
+    dispatch(fetchEvents(searchValue));
   }, [dispatch, searchValue]);
 
   const openModal = (id: string) => {
