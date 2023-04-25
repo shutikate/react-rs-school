@@ -44,7 +44,7 @@ export function App() {
         <Route path="about-us" element={<AboutUs />} />
         <Route path="form" element={<FormPage />} />
       </Route>
-      <Route path="404" element={<NotFound />} />
+      <Route path="*" element={<NotFound />} />
       <Route path="*" element={<Navigate to="/404" replace />} />
     </Routes>
   );

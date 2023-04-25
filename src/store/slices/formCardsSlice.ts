@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Event } from '../../types';
 
-interface FormCardsState {
+export interface FormCardsState {
   formCards: Event[];
 }
 
