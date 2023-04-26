@@ -11,7 +11,10 @@ const initialState: FormCardsState = {
 
 export const formCardsSlice = createSlice({
   name: 'formCards',
-  initialState,
+  initialState:
+    typeof window !== 'undefined' && window.__PRELOADED_STATE__
+      ? window.__PRELOADED_STATE__.formCardsReducer
+      : initialState,
   reducers: {
     createCard(state, action: PayloadAction<Event>) {
       state.formCards.push(action.payload);

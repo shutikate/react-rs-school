@@ -11,7 +11,9 @@ const initialState = {
 export const eventsSlice = createSlice({
   name: 'events',
   initialState:
-    typeof window !== 'undefined' ? window.__PRELOADED_STATE__.eventsReducer : initialState,
+    typeof window !== 'undefined' && window.__PRELOADED_STATE__
+      ? window.__PRELOADED_STATE__.eventsReducer
+      : initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder

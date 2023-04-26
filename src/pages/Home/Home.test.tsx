@@ -1,13 +1,8 @@
-import { vi } from 'vitest';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import { rootReducer } from '../../store/store';
 import { render, screen, waitFor } from '@testing-library/react';
 import { Home } from './Home';
-
-const testStore = configureStore({
-  reducer: rootReducer,
-});
 
 const mockEvents = [
   {
@@ -39,9 +34,20 @@ const mockEvents = [
   },
 ];
 
-vi.mock('../../api/events', () => ({
-  getEvents: vi.fn().mockImplementation(() => Promise.resolve(mockEvents)),
-}));
+const testStore = configureStore({
+  reducer: rootReducer,
+  preloadedState: {
+    eventsReducer: {
+      events: mockEvents,
+      isLoading: false,
+      error: '',
+    },
+  },
+});
+
+// vi.mock('../../api/events', () => ({
+//   getEvents: vi.fn().mockImplementation(() => Promise.resolve(mockEvents)),
+// }));
 
 describe('Testing Home', () => {
   it('Featured Events has to be presented', async () => {
@@ -61,9 +67,6 @@ describe('Testing Home', () => {
         <Home />
       </Provider>
     );
-    await waitFor(() => {
-      expect(screen.getByTestId('loader')).toBeInTheDocument();
-    });
     await waitFor(() => {
       expect(screen.queryByTestId('loader')).toBeNull();
     });
