@@ -5,8 +5,6 @@ import fs from 'fs';
 import { fileURLToPath } from 'url';
 import { createServer as createViteServer } from 'vite';
 import serialize from 'serialize-javascript';
-import { configureStore } from '@reduxjs/toolkit';
-import { rootReducer } from '../src/store/store';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -28,13 +26,13 @@ async function createServer() {
     const { render } = await vite.ssrLoadModule('/server/entry-server.tsx');
     const parts = template.split('"Not rendered"');
     res.write(parts[0]);
-    const { stream, preloadedState } = render(url, {
+    const { stream, preloadedState } = await render(url, {
       onShellReady() {
         stream.pipe(res);
       },
       onAllReady() {
         res.write(parts[1]);
-        res.write(serialize(preloadedState));
+        res.write(serialize(preloadedState).replace(/</g, '\\u003c'));
         res.write(parts[2]);
         res.end();
       },
@@ -43,9 +41,7 @@ async function createServer() {
       },
     });
   });
-  app.listen(port, () => {
-    console.log(`Listening on port: ${port}`);
-  });
+  app.listen(port);
 }
 
 createServer();

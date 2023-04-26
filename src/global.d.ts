@@ -1,7 +1,41 @@
 declare interface Window {
   __PRELOADED_STATE__: {
-    eventsReducer: EventState;
+    eventsReducer: {
+      events: {
+        id?: string;
+        category: string;
+        photo?: FileList;
+        photoURL: string;
+        name: string;
+        date: string;
+        time: string;
+        address: string;
+        contact: string;
+        payment: string;
+        minPrice?: string;
+        maxPrice?: string;
+        checkBox?: boolean;
+      }[];
+      isLoading: boolean;
+      error: string;
+    };
     searchValueReducer: { searchValue: string };
-    formCardsReducer: FormCardsState;
+    formCardsReducer: {
+      formCards: {
+        id?: string;
+        category: string;
+        photo?: FileList;
+        photoURL: string;
+        name: string;
+        date: string;
+        time: string;
+        address: string;
+        contact: string;
+        payment: string;
+        minPrice?: string;
+        maxPrice?: string;
+        checkBox?: boolean;
+      }[];
+    };
   };
 }

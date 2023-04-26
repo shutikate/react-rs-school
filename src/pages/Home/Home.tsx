@@ -8,14 +8,18 @@ import { fetchEvents } from '../../store/thunks/fetchEvents';
 import style from './Home.module.scss';
 
 export const Home = () => {
-  const searchValue = useAppSelector((state) => state.searchValueReducer.searchValue);
+  const value = useAppSelector((state) => state.searchValueReducer.searchValue);
   const dispatch = useAppDispatch();
   const { events, isLoading, error } = useAppSelector((state) => state.eventsReducer);
   const [idForModal, setIdForModal] = useState('');
+  const [searchValue, setSearchValue] = useState(value);
 
   useEffect(() => {
-    dispatch(fetchEvents(searchValue));
-  }, [dispatch, searchValue]);
+    if (searchValue !== value) {
+      dispatch(fetchEvents(value));
+      setSearchValue(value);
+    }
+  }, [dispatch, searchValue, value]);
 
   const openModal = (id: string) => {
     setIdForModal(id);

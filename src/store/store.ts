@@ -11,7 +11,6 @@ export const rootReducer = combineReducers({
 
 export const store = configureStore({
   reducer: rootReducer,
-  // preloadedState: window.__PRELOADED_STATE__,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

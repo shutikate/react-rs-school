@@ -12,7 +12,7 @@ export const CardEvent: FC<Props> = ({ card, onClick }) => {
   return (
     <div data-testid={id} className={style.wrapper} onClick={onClick}>
       <div>
-        <img src={photoURL} alt={'Photo of the event'} className={style.image}></img>
+        <img src={photoURL} alt={'Photo of the event'} className={style.image} height="180"></img>
         <h5>{category}</h5>
         <h4>{name}</h4>
         <div className={style.infoLine}>
