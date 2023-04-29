@@ -47,6 +47,3 @@ async function createServer() {
 }
 
 createServer();
-
-// app.use('/static', express.static('static'));
-// app.use('/assets', express.static(path.resolve(__dirname, './dist/assets')))

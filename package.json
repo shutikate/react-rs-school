@@ -7,8 +7,6 @@
     "unit:test": "vitest --coverage",
     "lint": "eslint . --ext .tsx --ext .ts",
     "dev": "ts-node ./server/index.ts",
-    "cypress:open": "cypress open",
-    "e2e:dev": "start-server-and-test dev http://localhost:3000 cypress:open",
     "e2e:test": "start-server-and-test dev http-get://localhost:3000 cypress && npx nyc report --reporter=text-summary",
     "cypress": "cypress run --e2e"
   },
