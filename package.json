@@ -4,10 +4,11 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "test": "vitest --coverage",
+    "unit:test": "vitest --coverage",
     "lint": "eslint . --ext .tsx --ext .ts",
-    "dev": "npm run open && ts-node ./server/index.ts",
-    "open": "start http:/localhost:3000"
+    "dev": "ts-node ./server/index.ts",
+    "e2e:test": "start-server-and-test dev http-get://localhost:3000 cypress && npx nyc report --reporter=text-summary",
+    "cypress": "cypress run --e2e"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.3",
@@ -24,8 +25,11 @@
     "uuid": "^9.0.0"
   },
   "devDependencies": {
+    "@cypress/code-coverage": "^3.10.4",
+    "@istanbuljs/nyc-config-typescript": "^1.0.2",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",
+    "@types/cypress__code-coverage": "^3.10.0",
     "@types/express": "^4.17.17",
     "@types/node": "^18.15.11",
     "@types/react": "^18.0.27",
@@ -36,6 +40,7 @@
     "@typescript-eslint/parser": "^5.22.0",
     "@vitejs/plugin-react": "^3.1.0",
     "@vitest/coverage-c8": "^0.29.3",
+    "cypress": "^12.11.0",
     "eslint": "^8.14.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-import-resolver-typescript": "^2.7.1",
@@ -49,9 +54,11 @@
     "lint-staged": "^12.4.1",
     "prettier": "^2.6.2",
     "sass": "^1.59.2",
+    "start-server-and-test": "^2.0.0",
     "ts-node": "^10.9.1",
     "typescript": "^4.9.3",
     "vite": "^4.1.0",
+    "vite-plugin-istanbul": "^4.0.1",
     "vitest": "^0.29.3"
   }
 }
