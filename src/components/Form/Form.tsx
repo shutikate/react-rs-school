@@ -60,6 +60,7 @@ export const Form = () => {
             {...register('category', {
               validate: validation.categoryRules,
             })}
+            data-cy="category"
           />
           <ErrorField error={errors.category?.message} />
           <Input
@@ -68,6 +69,7 @@ export const Form = () => {
             {...register('name', {
               validate: validation.eventRules,
             })}
+            data-cy="name"
           />
           <ErrorField error={errors.name?.message} />
           <Input
@@ -76,6 +78,7 @@ export const Form = () => {
             {...register('date', {
               validate: validation.dateRules,
             })}
+            data-cy="date"
           />
           <ErrorField error={errors.date?.message} />
           <Input
@@ -84,6 +87,7 @@ export const Form = () => {
             {...register('time', {
               validate: validation.timeRules,
             })}
+            data-cy="time"
           />
           <ErrorField error={errors.time?.message} />
           <Input
@@ -92,6 +96,7 @@ export const Form = () => {
             {...register('address', {
               validate: validation.addressRules,
             })}
+            data-cy="address"
           />
           <ErrorField error={errors.address?.message} />
           <Input
@@ -100,6 +105,7 @@ export const Form = () => {
             {...register('contact', {
               validate: validation.phoneRules,
             })}
+            data-cy="phone"
           />
           <ErrorField error={errors.contact?.message} />
         </div>
@@ -114,6 +120,7 @@ export const Form = () => {
                 {...register('payment', {
                   validate: validation.paymentRules,
                 })}
+                data-cy="payment"
               />
             ))}
             <ErrorField error={errors.payment?.message} />
@@ -126,6 +133,7 @@ export const Form = () => {
             {...register('minPrice', {
               validate: paymentValue !== 'Free' ? validation.priceRules : {},
             })}
+            data-cy="minimum-price"
           />
           <ErrorField error={errors.minPrice?.message} />
           <Input
@@ -144,6 +152,7 @@ export const Form = () => {
                     }
                   : {},
             })}
+            data-cy="maximum-price"
           />
           <ErrorField error={errors.maxPrice?.message} />
           <Input
@@ -152,6 +161,7 @@ export const Form = () => {
             {...register('photo', {
               validate: validation.photoRules,
             })}
+            data-cy="photo"
           />
           <ErrorField error={errors.photo?.message} />
           <Input
@@ -160,6 +170,7 @@ export const Form = () => {
             {...register('checkBox', {
               validate: validation.agreementRules,
             })}
+            data-cy="agreement"
           />
           <ErrorField error={errors.checkBox?.message} />
         </div>
@@ -167,7 +178,7 @@ export const Form = () => {
       {successMessage ? (
         <div className={style.message}>Card created successfully</div>
       ) : (
-        <Button type={'submit'} text="Create card" />
+        <Button data-cy="create-button" type={'submit'} text="Create card" />
       )}
     </form>
   );

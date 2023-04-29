@@ -6,9 +6,9 @@ interface Props {
   type: 'submit' | 'button';
 }
 
-export const Button: FC<Props> = ({ text, type }) => {
+export const Button: FC<Props> = ({ text, type, ...rest }) => {
   return (
-    <button type={type} className={style.button}>
+    <button type={type} className={style.button} {...rest}>
       {text}
     </button>
   );

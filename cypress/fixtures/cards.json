@@ -1,0 +1,54 @@
+[
+  {
+    "id": "1",
+    "category": "Concerts",
+    "photoURL": "https://allaboutmusic.pl/wp-content/uploads/2018/08/fall-out-boy.jpg",
+    "name": "Fall Out Boy",
+    "date": "17.10.2023",
+    "time": "21:00",
+    "address": "Warsaw Łazienkowska 6A",
+    "contact": "+48 784563723",
+    "payment": "Pay online",
+    "minPrice": "32",
+    "maxPrice": "400"
+  },
+  {
+    "id": "2",
+    "category": "For Children",
+    "photoURL":
+      "https://cs5.livemaster.ru/storage/65/1a/3d4d18adaa758e0c2771f38ed2xg--aktivnyj-otdyh-i-razvlecheniya-alisa-tenevoj-teatr-tenej-igro.jpg",
+    "name": "Alice in Wonderland",
+    "date": "20.04.2023",
+    "time": "10:00",
+    "address": "Krakow, al.Pokoju 6B",
+    "contact": "+48 675980786",
+    "payment": "Pay online",
+    "minPrice": "7",
+    "maxPrice": "12"
+  },
+  {
+    "id": "3",
+    "category": "For Children",
+    "photoURL": "http://tgb2.ru/images/news/2018news/0213_football3.jpg",
+    "name": "Master class 'I love football'",
+    "date": "19.04.2023",
+    "time": "12:00",
+    "address": "Krakow, Rynek Glowny",
+    "contact": "+48 673425416",
+    "payment": "Free"
+  },
+  {
+    "id": "4",
+    "category": "Concerts",
+    "photoURL":
+      "https://media.stubcloudstatic.com/stubhub-catalog/image/upload/t_thumb_169/f_auto/v1/performer/7527/8301f321f54f12b681dd71a90bc37bac?_a=AJAJZWI0",
+    "name": "Red Hot Chili Peppers",
+    "date": "21.06.2023",
+    "time": "18:00",
+    "address": "Warsaw PGE Narodowy",
+    "contact": "+48 673567898",
+    "payment": "Pay online",
+    "minPrice": "28",
+    "maxPrice": "400"
+  }
+]

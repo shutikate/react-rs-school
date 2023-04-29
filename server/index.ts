@@ -41,7 +41,9 @@ async function createServer() {
       },
     });
   });
-  app.listen(port);
+  app.listen(port, () => {
+    console.log(`Server listening on port http://localhost:${port}`);
+  });
 }
 
 createServer();

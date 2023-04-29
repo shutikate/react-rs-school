@@ -20,13 +20,14 @@ export const SearchBar = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={style.container}>
       <input
+        data-cy="search-input"
         aria-label="search"
         type="text"
         {...register('searchValue')}
         defaultValue={searchValue}
         className={style.input}
       ></input>
-      <Button type={'submit'} text={'Search'} />
+      <Button type={'submit'} text={'Search'} data-cy="search-button" />
     </form>
   );
 };

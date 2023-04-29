@@ -33,10 +33,10 @@ export const Modal: FC<Modal> = ({ id, onClose }) => {
         {isLoading ? (
           <Loader />
         ) : error ? (
-          <p>{error}</p>
+          <p data-cy="modal-card-error">{error}</p>
         ) : (
           <>
-            <div>
+            <div data-cy="modal-card">
               <div className={style.closeIcon} onClick={onClose} role="button"></div>
               <h4>{card?.category}</h4>
               <h3>{card?.name}</h3>

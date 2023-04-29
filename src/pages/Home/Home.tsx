@@ -32,7 +32,9 @@ export const Home = () => {
       {isLoading ? (
         <Loader />
       ) : error ? (
-        <p className={style.error}>{error}</p>
+        <p data-cy="cards-not-found" className={style.error}>
+          {error}
+        </p>
       ) : (
         <div className={style.cardWrapper}>
           {events.map((event) => (

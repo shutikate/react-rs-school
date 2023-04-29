@@ -10,7 +10,7 @@ interface Props {
 export const CardEvent: FC<Props> = ({ card, onClick }) => {
   const { id, photoURL, category, name, date } = { ...card };
   return (
-    <div data-testid={id} className={style.wrapper} onClick={onClick}>
+    <div data-testid={id} data-cy="card" className={style.wrapper} onClick={onClick}>
       <div>
         <img src={photoURL} alt={'Photo of the event'} className={style.image} height="180"></img>
         <h5>{category}</h5>
