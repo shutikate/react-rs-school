@@ -4,7 +4,7 @@ import style from './NotFound.module.scss';
 
 export const NotFound = () => {
   return (
-    <div className={style.wrapper}>
+    <div data-cy="not-found-page" className={style.wrapper}>
       <img src={notFound} alt={'Image page not found'} className={style.image} />
       <p className={style.errorText}>This page does not exist</p>
       <Link to="/" className={style.link}>

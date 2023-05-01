@@ -1,0 +1,13 @@
+{
+  "id": "1",
+  "category": "Concerts",
+  "photoURL": "https://allaboutmusic.pl/wp-content/uploads/2018/08/fall-out-boy.jpg",
+  "name": "Fall Out Boy",
+  "date": "17.10.2023",
+  "time": "21:00",
+  "address": "Warsaw Łazienkowska 6A",
+  "contact": "+48 784563723",
+  "payment": "Pay online",
+  "minPrice": "32",
+  "maxPrice": "400"
+}

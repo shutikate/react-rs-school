@@ -2,13 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Event } from '../../types';
 import { fetchEvents } from '../thunks/fetchEvents';
 
-interface EventState {
-  events: Event[];
-  isLoading: boolean;
-  error: string;
-}
-
-const initialState: EventState = {
+const initialState = {
   events: [],
   isLoading: false,
   error: '',
@@ -16,7 +10,10 @@ const initialState: EventState = {
 
 export const eventsSlice = createSlice({
   name: 'events',
-  initialState,
+  initialState:
+    typeof window !== 'undefined' && window.__PRELOADED_STATE__
+      ? window.__PRELOADED_STATE__.eventsReducer
+      : initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder

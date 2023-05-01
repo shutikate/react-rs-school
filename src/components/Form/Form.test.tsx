@@ -32,7 +32,7 @@ describe('Testing Form', () => {
 
     await userEvent.selectOptions(category, 'Concerts');
     await userEvent.type(name, 'Pink');
-    await userEvent.type(date, '2023-04-30');
+    await userEvent.type(date, '2024-04-30');
     await userEvent.type(time, '21:00');
     await userEvent.type(address, 'Main Arena');
     await userEvent.type(phone, '+456765678');

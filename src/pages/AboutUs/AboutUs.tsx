@@ -2,7 +2,7 @@ import style from './AboutUs.module.scss';
 
 export const AboutUs = () => {
   return (
-    <div className={style.wrapper}>
+    <div data-cy="about-us-page" className={style.wrapper}>
       <h1>About Us</h1>
       <p>
         Dapibus vel amet imperdiet odio. Dictumst. Platea molestie amet dictum nec arcu in nunc

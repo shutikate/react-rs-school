@@ -6,5 +6,9 @@ type Error = {
 };
 
 export const ErrorField: FC<Error> = ({ error }) => {
-  return <div className={style.errorWrapper}>{error ? error : ''}</div>;
+  return (
+    <div className={style.errorWrapper}>
+      {error ? <span data-cy="error-field">{error}</span> : ''}
+    </div>
+  );
 };

@@ -8,14 +8,18 @@ import { fetchEvents } from '../../store/thunks/fetchEvents';
 import style from './Home.module.scss';
 
 export const Home = () => {
-  const searchValue = useAppSelector((state) => state.searchValueReducer.searchValue);
+  const value = useAppSelector((state) => state.searchValueReducer.searchValue);
   const dispatch = useAppDispatch();
   const { events, isLoading, error } = useAppSelector((state) => state.eventsReducer);
   const [idForModal, setIdForModal] = useState('');
+  const [searchValue, setSearchValue] = useState(value);
 
   useEffect(() => {
-    dispatch(fetchEvents(searchValue));
-  }, [dispatch, searchValue]);
+    if (searchValue !== value) {
+      dispatch(fetchEvents(value));
+      setSearchValue(value);
+    }
+  }, [dispatch, searchValue, value]);
 
   const openModal = (id: string) => {
     setIdForModal(id);
@@ -28,7 +32,9 @@ export const Home = () => {
       {isLoading ? (
         <Loader />
       ) : error ? (
-        <p className={style.error}>{error}</p>
+        <p data-cy="cards-not-found" className={style.error}>
+          {error}
+        </p>
       ) : (
         <div className={style.cardWrapper}>
           {events.map((event) => (
